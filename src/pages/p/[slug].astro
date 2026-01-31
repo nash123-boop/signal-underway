@@ -2,7 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-// ✅ Required for static builds with dynamic routes
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
   return posts.map((p) => ({
@@ -44,59 +43,50 @@ const jsonLd = {
   description={post.data.deck}
   ogImage={post.data.cover ?? "/og-default.png"}
 >
-  <article class="article">
-    <div class="pillrow" style="margin-top:14px">
-      <span class="pill">{post.data.category}</span>
-      {post.data.tags?.slice(0, 3).map((t) => <span class="pill">{t}</span>)}
-    </div>
+  <div class="article">
+    <div class="articleWrap">
+      <div class="meta">
+        <span class="badge">{post.data.category}</span>
+        <span>{post.data.publishDate}</span>
+        {post.data.tags?.slice(0, 3).map((t) => <span class="badge">{t}</span>)}
+      </div>
 
-    <h1>{post.data.title}</h1>
-    <p class="sub">{post.data.deck}</p>
+      <h1>{post.data.title}</h1>
+      <p class="sub">{post.data.deck}</p>
 
-    {post.data.cover && (
-      <img
-        class="cover"
-        src={post.data.cover}
-        alt=""
-        loading="eager"
-        style="height:240px;border-radius:18px;border:1px solid var(--line)"
-      />
-    )}
+      <div class="hr"></div>
 
-    <div class="meta" style="margin-top:12px">
-      <span>Published</span><span class="dot">•</span><span>{post.data.publishDate}</span>
-    </div>
+      <div class="prose">
+        <slot />
+      </div>
 
-    <div class="hr"></div>
+      <div class="hr"></div>
 
-    <div class="prose">
-      <slot />
-    </div>
+      <div class="callout">
+        <strong>Reader note:</strong> We publish <em>signals</em> — patterns supported by publicly observable traces.
+        If you have primary-source links or corrections, send them to <strong>tips@yourdomain</strong>.
+      </div>
 
-    <div class="hr"></div>
+      <div class="hr"></div>
 
-    <div class="callout">
-      <strong>Reader note:</strong> We publish <em>signals</em> — patterns supported by publicly observable traces.
-      We avoid certainty. If you have primary-source links or corrections, send them to <strong>tips@yourdomain</strong>.
-    </div>
-
-    <section class="readnext">
-      <h2 style="margin:18px 0 6px 0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">
-        Read next
-      </h2>
-      {others.map((p) => (
-        <a class="item" href={`/p/${p.slug}`}>
-          <div class="itemInner">
-            <div class="meta">
-              <span class="badge">{p.data.category}</span><span class="dot">•</span><span>{p.data.publishDate}</span>
+      <div class="sectionTitle">Read next</div>
+      <div class="list">
+        {others.map((p) => (
+          <a class="item" href={`/p/${p.slug}`} style="grid-template-columns:1fr 120px;">
+            <div class="itemInner">
+              <div class="meta">
+                <span class="badge">{p.data.category}</span>
+                <span>{p.data.publishDate}</span>
+              </div>
+              <h3>{p.data.title}</h3>
+              <p>{p.data.deck}</p>
             </div>
-            <h3>{p.data.title}</h3>
-            <p>{p.data.deck}</p>
-          </div>
-        </a>
-      ))}
-    </section>
-  </article>
+            <div class="thumb" aria-hidden="true" style="height:80px;"></div>
+          </a>
+        ))}
+      </div>
+    </div>
 
-  <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+    <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+  </div>
 </BaseLayout>
