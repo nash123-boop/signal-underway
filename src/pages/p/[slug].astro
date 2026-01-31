@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-// ✅ Required for static builds with dynamic routes
+// ✅ Required for static builds with dynamic routes (static build)
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
   return posts.map((p) => ({
