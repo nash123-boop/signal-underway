@@ -4,15 +4,15 @@ import TopBar from "../components/TopBar.astro";
 import Analytics from "../components/Analytics.astro";
 
 const {
-  title = "Signal Underway",
-  description = "Signals, patterns, and quiet movements of power — without the breaking-news noise.",
+  title = "The National Signal",
+  description = "Tracking patterns shaping what comes next.",
   currentNav = "",
   ogImage = "/og-default.png",
   canonical = Astro.url.pathname,
   noIndex = false,
 } = Astro.props;
 
-const site = Astro.site?.toString() ?? "https://signal-underway.example";
+const site = Astro.site?.toString() ?? "https://thenationalsignal.pages.dev";
 const canonicalUrl = new URL(canonical, site).toString();
 const og = new URL(ogImage, site).toString();
 ---
@@ -46,7 +46,7 @@ const og = new URL(ogImage, site).toString();
       <footer class="footer">
         <div class="container" style="padding:0">
           <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
-            <div>© {new Date().getFullYear()} Signal Underway</div>
+            <div>© {new Date().getFullYear()} The National Signal</div>
             <div style="display:flex;gap:12px;flex-wrap:wrap">
               <a href="/about">About</a>
               <a href="/method">Method</a>
