@@ -3,26 +3,37 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { categories } from "../../lib/categories";
 
+// ✅ Required for static builds with dynamic routes
+export async function getStaticPaths() {
+  return categories.map((c) => ({
+    params: { category: c.toLowerCase() },
+  }));
+}
+
 const { category } = Astro.params;
 const cat = (category ?? "").toLowerCase();
-const canonicalCat = categories.find(c => c.toLowerCase() === cat);
+const canonicalCat = categories.find((c) => c.toLowerCase() === cat);
 
 if (!canonicalCat) {
   return Astro.redirect("/latest");
 }
 
 const posts = (await getCollection("posts"))
-  .filter(p => p.data.category.toLowerCase() === cat)
+  .filter((p) => p.data.category.toLowerCase() === cat)
   .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
 ---
 <BaseLayout title={`${canonicalCat} — Signal Underway`} currentNav={canonicalCat}>
-  <h2 style="margin:14px 0 8px 0;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-size:13px">{canonicalCat}</h2>
+  <h2 style="margin:14px 0 8px 0;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-size:13px">
+    {canonicalCat}
+  </h2>
   <div class="list">
     {posts.map((p) => (
       <a class="item" href={`/p/${p.slug}`}>
         <div class="itemInner">
           <div class="meta">
-            <span class="badge">{p.data.category}</span><span class="dot">•</span><span>{p.data.publishDate}</span>
+            <span class="badge">{p.data.category}</span>
+            <span class="dot">•</span>
+            <span>{p.data.publishDate}</span>
           </div>
           <h3>{p.data.title}</h3>
           <p>{p.data.deck}</p>
