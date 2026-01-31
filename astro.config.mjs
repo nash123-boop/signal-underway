@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://signal-underway.example', // change to your real domain for correct canonical + RSS links
+  site: 'https://thenationalsignal.pages.dev',
   trailingSlash: 'never',
 });
