@@ -5,9 +5,10 @@ export async function GET({ site }) {
     .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate))
     .slice(0, 50);
 
-  const items = posts.map((p) => {
-    const link = new URL(`/p/${p.slug}`, site).toString();
-    return `
+  const items = posts
+    .map((p) => {
+      const link = new URL(`/p/${p.slug}`, site).toString();
+      return `
       <item>
         <title><![CDATA[${p.data.title}]]></title>
         <link>${link}</link>
@@ -16,17 +17,20 @@ export async function GET({ site }) {
         <description><![CDATA[${p.data.deck}]]></description>
       </item>
     `.trim();
-  }).join("\n");
+    })
+    .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8" ?>
   <rss version="2.0">
     <channel>
-      <title>Signal Underway</title>
+      <title>The National Signal</title>
       <link>${site}</link>
-      <description>Signals, patterns, and quiet movements of power.</description>
+      <description>Tracking patterns shaping what comes next.</description>
       ${items}
     </channel>
   </rss>`;
 
-  return new Response(xml, { headers: { "Content-Type": "application/xml; charset=utf-8" } });
+  return new Response(xml, {
+    headers: { "Content-Type": "application/xml; charset=utf-8" },
+  });
 }
