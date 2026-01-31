@@ -2,15 +2,24 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-const { slug } = Astro.params;
+// ✅ Required for static builds with dynamic routes
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((p) => ({
+    params: { slug: p.slug },
+    props: { id: p.id },
+  }));
+}
+
+const { id } = Astro.props;
 const posts = await getCollection("posts");
-const post = posts.find(p => p.slug === slug);
+const post = posts.find((p) => p.id === id);
 
 if (!post) return Astro.redirect("/latest");
 
 const others = posts
-  .filter(p => p.id !== post.id)
-  .sort((a,b) => b.data.publishDate.localeCompare(a.data.publishDate))
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate))
   .slice(0, 4);
 
 const site = Astro.site?.toString() ?? "https://signal-underway.example";
@@ -24,8 +33,10 @@ const jsonLd = {
   "datePublished": post.data.publishDate,
   "author": { "@type": "Organization", "name": "Signal Underway" },
   "mainEntityOfPage": url,
-  "image": post.data.cover ? new URL(post.data.cover, site).toString() : new URL("/og-default.png", site).toString(),
-  "publisher": { "@type": "Organization", "name": "Signal Underway" }
+  "image": post.data.cover
+    ? new URL(post.data.cover, site).toString()
+    : new URL("/og-default.png", site).toString(),
+  "publisher": { "@type": "Organization", "name": "Signal Underway" },
 };
 ---
 <BaseLayout
@@ -36,16 +47,26 @@ const jsonLd = {
   <article class="article">
     <div class="pillrow" style="margin-top:14px">
       <span class="pill">{post.data.category}</span>
-      {post.data.tags?.slice(0,3).map((t) => <span class="pill">{t}</span>)}
+      {post.data.tags?.slice(0, 3).map((t) => <span class="pill">{t}</span>)}
     </div>
 
     <h1>{post.data.title}</h1>
     <p class="sub">{post.data.deck}</p>
 
-    {post.data.cover && <img class="cover" src={post.data.cover} alt="" loading="eager" style="height:240px;border-radius:18px;border:1px solid var(--line)"/>}
+    {post.data.cover && (
+      <img
+        class="cover"
+        src={post.data.cover}
+        alt=""
+        loading="eager"
+        style="height:240px;border-radius:18px;border:1px solid var(--line)"
+      />
+    )}
 
     <div class="meta" style="margin-top:12px">
-      <span>Published</span><span class="dot">•</span><span>{post.data.publishDate}</span>
+      <span>Published</span>
+      <span class="dot">•</span>
+      <span>{post.data.publishDate}</span>
     </div>
 
     <div class="hr"></div>
@@ -62,12 +83,18 @@ const jsonLd = {
     </div>
 
     <section class="readnext">
-      <h2 style="margin:18px 0 6px 0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Read next</h2>
+      <h2
+        style="margin:18px 0 6px 0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)"
+      >
+        Read next
+      </h2>
       {others.map((p) => (
         <a class="item" href={`/p/${p.slug}`}>
           <div class="itemInner">
             <div class="meta">
-              <span class="badge">{p.data.category}</span><span class="dot">•</span><span>{p.data.publishDate}</span>
+              <span class="badge">{p.data.category}</span>
+              <span class="dot">•</span>
+              <span>{p.data.publishDate}</span>
             </div>
             <h3>{p.data.title}</h3>
             <p>{p.data.deck}</p>
