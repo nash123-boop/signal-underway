@@ -21,6 +21,8 @@ const others = posts
   .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate))
   .slice(0, 4);
 
+const cover = post.data.cover ?? "/og-default.png";
+
 const site = Astro.site?.toString() ?? "https://thenationalsignal.pages.dev";
 const url = new URL(`/p/${post.slug}`, site).toString();
 
@@ -32,16 +34,14 @@ const jsonLd = {
   "datePublished": post.data.publishDate,
   "author": { "@type": "Organization", "name": "The National Signal" },
   "mainEntityOfPage": url,
-  "image": post.data.cover
-    ? new URL(post.data.cover, site).toString()
-    : new URL("/og-default.png", site).toString(),
+  "image": new URL(cover, site).toString(),
   "publisher": { "@type": "Organization", "name": "The National Signal" },
 };
 ---
 <BaseLayout
   title={`${post.data.title} — The National Signal`}
   description={post.data.deck}
-  ogImage={post.data.cover ?? "/og-default.png"}
+  ogImage={cover}
 >
   <div class="article">
     <div class="articleWrap">
@@ -53,6 +53,15 @@ const jsonLd = {
 
       <h1>{post.data.title}</h1>
       <p class="sub">{post.data.deck}</p>
+
+      <figure class="heroMedia">
+        <img
+          src={cover}
+          alt=""
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
 
       <div class="hr"></div>
 
@@ -71,19 +80,25 @@ const jsonLd = {
 
       <div class="sectionTitle">Read next</div>
       <div class="list">
-        {others.map((p) => (
-          <a class="item" href={`/p/${p.slug}`} style="grid-template-columns:1fr 120px;">
-            <div class="itemInner">
-              <div class="meta">
-                <span class="badge">{p.data.category}</span>
-                <span>{p.data.publishDate}</span>
+        {others.map((p) => {
+          const c = p.data.cover ?? "/og-default.png";
+          return (
+            <a class="item" href={`/p/${p.slug}`}>
+              <div class="itemInner">
+                <div class="meta">
+                  <span class="badge">{p.data.category}</span>
+                  <span>{p.data.publishDate}</span>
+                </div>
+                <h3>{p.data.title}</h3>
+                <p>{p.data.deck}</p>
               </div>
-              <h3>{p.data.title}</h3>
-              <p>{p.data.deck}</p>
-            </div>
-            <div class="thumb" aria-hidden="true" style="height:80px;"></div>
-          </a>
-        ))}
+
+              <div class="thumb" aria-hidden="true">
+                <img src={c} alt="" loading="lazy" decoding="async" />
+              </div>
+            </a>
+          );
+        })}
       </div>
     </div>
 
