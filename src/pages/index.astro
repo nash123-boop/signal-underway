@@ -8,6 +8,8 @@ const posts = (await getCollection("posts"))
 const hero = posts[0];
 const rightRail = posts.slice(1, 4);
 const latest = posts.slice(1, 9);
+
+const coverOf = (p) => p?.data?.cover ?? "/og-default.png";
 ---
 
 <BaseLayout title="The National Signal" description="Tracking patterns shaping what comes next.">
@@ -43,7 +45,15 @@ const latest = posts.slice(1, 9);
                 <h3>{p.data.title}</h3>
                 <p>{p.data.deck}</p>
               </div>
-              <div class="thumb" aria-hidden="true"></div>
+
+              <div class="thumb" aria-hidden="true">
+                <img
+                  src={coverOf(p)}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
             </a>
           ))}
         </div>
@@ -54,14 +64,23 @@ const latest = posts.slice(1, 9);
 
         <div class="list">
           {rightRail.map((p) => (
-            <a class="item" href={`/p/${p.slug}`} style="grid-template-columns:1fr;">
+            <a class="item railItem" href={`/p/${p.slug}`}>
               <div class="itemInner">
                 <div class="meta">
                   <span class="badge">{p.data.category}</span>
                   <span>{p.data.publishDate}</span>
                 </div>
-                <h3 style="font-size:18px">{p.data.title}</h3>
+                <h3>{p.data.title}</h3>
                 <p>{p.data.deck}</p>
+              </div>
+
+              <div class="thumb railThumb" aria-hidden="true">
+                <img
+                  src={coverOf(p)}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </a>
           ))}
