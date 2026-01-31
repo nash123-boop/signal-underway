@@ -3,8 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { categories } from "../../lib/categories";
 
-// ✅ Required for static builds with dynamic routes (static build)
-
+// Required for static builds with dynamic routes
 export async function getStaticPaths() {
   return categories.map((c) => ({
     params: { category: c.toLowerCase() },
@@ -15,29 +14,42 @@ const { category } = Astro.params;
 const cat = (category ?? "").toLowerCase();
 const canonicalCat = categories.find((c) => c.toLowerCase() === cat);
 
-if (!canonicalCat) {
-  return Astro.redirect("/latest");
-}
+if (!canonicalCat) return Astro.redirect("/latest");
 
 const posts = (await getCollection("posts"))
   .filter((p) => p.data.category.toLowerCase() === cat)
   .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
+
+const coverOf = (p) => p?.data?.cover ?? "/og-default.png";
+
+// Optional: pick a “banner” image from the newest post in the category
+const banner = posts[0]?.data?.cover ?? "/og-default.png";
 ---
-<BaseLayout title={`${canonicalCat} — Signal Underway`} currentNav={canonicalCat}>
-  <h2 style="margin:14px 0 8px 0;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-size:13px">
-    {canonicalCat}
-  </h2>
+
+<BaseLayout title={`${canonicalCat} — The National Signal`} description={`Signals in ${canonicalCat}.`}>
+  <div class="sectionHeader">
+    <div class="sectionKicker">Section</div>
+    <h1>{canonicalCat}</h1>
+    <p>Signals tagged under {canonicalCat}. Clean, fast, image-led.</p>
+    <div class="sectionBanner" aria-hidden="true">
+      <img src={banner} alt="" loading="eager" decoding="async" />
+    </div>
+  </div>
+
   <div class="list">
     {posts.map((p) => (
       <a class="item" href={`/p/${p.slug}`}>
         <div class="itemInner">
           <div class="meta">
             <span class="badge">{p.data.category}</span>
-            <span class="dot">•</span>
             <span>{p.data.publishDate}</span>
           </div>
           <h3>{p.data.title}</h3>
           <p>{p.data.deck}</p>
+        </div>
+
+        <div class="thumb" aria-hidden="true">
+          <img src={coverOf(p)} alt="" loading="lazy" decoding="async" />
         </div>
       </a>
     ))}
