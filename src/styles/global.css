@@ -1,11 +1,12 @@
 :root {
-  --bg: #ffffff;
-  --panel: #f8fafc;
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --panel-strong: #f1f5f9;
   --line: #e2e8f0;
   --text: #0f172a;
   --muted: #64748b;
 
-  --accent: #4f46e5;
+  --accent: #5b5cf6;
   --accent-soft: #eef2ff;
 
   --radius: 16px;
@@ -28,11 +29,6 @@ html, body {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-img {
-  max-width: 100%;
-  display: block;
 }
 
 .container {
@@ -69,9 +65,10 @@ img {
 
 .brand h1 {
   font-size: 15px;
-  letter-spacing: .12em;
+  letter-spacing: .14em;
   text-transform: uppercase;
   margin: 0;
+  font-weight: 700;
 }
 
 .tag {
@@ -84,108 +81,73 @@ img {
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #5b5cf6, #8b5cf6);
 }
 
 /* ========================= */
-/* Navigation */
-/* ========================= */
-
-.navlinks {
-  display: flex;
-  gap: 18px;
-  font-size: 14px;
-}
-
-.navlinks a {
-  color: var(--muted);
-}
-
-.navlinks a.active {
-  color: var(--text);
-  font-weight: 600;
-}
-
-/* ========================= */
-/* Search */
-/* ========================= */
-
-.search {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 6px 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.search input {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 14px;
-}
-
-/* ========================= */
-/* Hero */
+/* HERO */
 /* ========================= */
 
 .hero {
-  background: linear-gradient(135deg, #eef2ff, #ffffff);
+  background: linear-gradient(135deg, #ffffff, #eef2ff);
   border: 1px solid var(--line);
   padding: 40px;
   border-radius: var(--radius);
   margin-top: 32px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
 }
 
 .hero h1 {
-  font-size: 40px;
-  margin: 0 0 12px 0;
-  line-height: 1.2;
+  font-size: 42px;
+  margin: 0 0 14px 0;
+  line-height: 1.15;
+  font-weight: 800;
 }
 
 .hero p {
   font-size: 16px;
   color: var(--muted);
   margin: 0 0 20px 0;
+  max-width: 700px;
 }
 
 /* ========================= */
-/* Buttons */
+/* BUTTONS */
 /* ========================= */
 
 button, .btn {
   background: var(--accent);
   color: white;
   border: none;
-  padding: 10px 18px;
+  padding: 12px 20px;
   border-radius: 999px;
   font-size: 14px;
   cursor: pointer;
+  font-weight: 600;
+  transition: all .15s ease;
 }
 
-.btn.secondary {
-  background: var(--accent-soft);
-  color: var(--accent);
+button:hover {
+  transform: translateY(-1px);
 }
 
 /* ========================= */
-/* Cards */
+/* CARDS */
 /* ========================= */
 
 .item {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 16px;
-  background: white;
+  padding: 22px;
+  margin-bottom: 18px;
+  background: var(--panel);
   transition: all .15s ease;
+  box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
 }
 
 .item:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
 .meta {
@@ -202,50 +164,47 @@ button, .btn {
   padding: 4px 8px;
   border-radius: 999px;
   font-size: 11px;
-}
-
-.dot {
-  opacity: .4;
+  font-weight: 600;
 }
 
 h2 {
   margin-top: 40px;
-  font-size: 14px;
-  letter-spacing: .12em;
+  font-size: 13px;
+  letter-spacing: .15em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
 /* ========================= */
-/* Article */
+/* ARTICLE */
 /* ========================= */
 
 .article h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
+  font-size: 38px;
+  font-weight: 800;
 }
 
 .article .sub {
-  font-size: 16px;
+  font-size: 17px;
   color: var(--muted);
 }
 
 .hr {
   height: 1px;
   background: var(--line);
-  margin: 24px 0;
+  margin: 28px 0;
 }
 
 .callout {
-  background: var(--panel);
-  padding: 18px;
+  background: var(--panel-strong);
+  padding: 20px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
   font-size: 14px;
 }
 
 /* ========================= */
-/* Footer */
+/* FOOTER */
 /* ========================= */
 
 .footer {
