@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-// ✅ Required for static builds with dynamic routes (static build)
+// ✅ Required for static builds with dynamic routes
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
   return posts.map((p) => ({
@@ -22,7 +22,7 @@ const others = posts
   .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate))
   .slice(0, 4);
 
-const site = Astro.site?.toString() ?? "https://signal-underway.example";
+const site = Astro.site?.toString() ?? "https://thenationalsignal.pages.dev";
 const url = new URL(`/p/${post.slug}`, site).toString();
 
 const jsonLd = {
@@ -31,16 +31,16 @@ const jsonLd = {
   "headline": post.data.title,
   "description": post.data.deck,
   "datePublished": post.data.publishDate,
-  "author": { "@type": "Organization", "name": "Signal Underway" },
+  "author": { "@type": "Organization", "name": "The National Signal" },
   "mainEntityOfPage": url,
   "image": post.data.cover
     ? new URL(post.data.cover, site).toString()
     : new URL("/og-default.png", site).toString(),
-  "publisher": { "@type": "Organization", "name": "Signal Underway" },
+  "publisher": { "@type": "Organization", "name": "The National Signal" },
 };
 ---
 <BaseLayout
-  title={`${post.data.title} — Signal Underway`}
+  title={`${post.data.title} — The National Signal`}
   description={post.data.deck}
   ogImage={post.data.cover ?? "/og-default.png"}
 >
@@ -64,9 +64,7 @@ const jsonLd = {
     )}
 
     <div class="meta" style="margin-top:12px">
-      <span>Published</span>
-      <span class="dot">•</span>
-      <span>{post.data.publishDate}</span>
+      <span>Published</span><span class="dot">•</span><span>{post.data.publishDate}</span>
     </div>
 
     <div class="hr"></div>
@@ -78,23 +76,19 @@ const jsonLd = {
     <div class="hr"></div>
 
     <div class="callout">
-      <strong>Reader note:</strong> This site publishes <em>signals</em> — patterns supported by publicly observable traces.
+      <strong>Reader note:</strong> We publish <em>signals</em> — patterns supported by publicly observable traces.
       We avoid certainty. If you have primary-source links or corrections, send them to <strong>tips@yourdomain</strong>.
     </div>
 
     <section class="readnext">
-      <h2
-        style="margin:18px 0 6px 0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)"
-      >
+      <h2 style="margin:18px 0 6px 0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">
         Read next
       </h2>
       {others.map((p) => (
         <a class="item" href={`/p/${p.slug}`}>
           <div class="itemInner">
             <div class="meta">
-              <span class="badge">{p.data.category}</span>
-              <span class="dot">•</span>
-              <span>{p.data.publishDate}</span>
+              <span class="badge">{p.data.category}</span><span class="dot">•</span><span>{p.data.publishDate}</span>
             </div>
             <h3>{p.data.title}</h3>
             <p>{p.data.deck}</p>
