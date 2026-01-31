@@ -1,0 +1,48 @@
+---
+import { categories } from "../lib/categories";
+const { current = "" } = Astro.props;
+---
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="/">
+      <span class="logo" aria-hidden="true"></span>
+      <div>
+        <h1>Signal Underway</h1>
+        <p class="tag">The future doesn’t announce itself.</p>
+      </div>
+    </a>
+
+    <div class="search" role="search" aria-label="Site search">
+      <span style="opacity:.7">⌕</span>
+      <input id="q" name="q" placeholder="Search signals…" />
+      <span class="kbd">/</span>
+    </div>
+
+    <nav class="navlinks" aria-label="Primary">
+      <a href="/latest" class={current === "Latest" ? "active" : ""}>Latest</a>
+      {categories.map((c) => (
+        <a href={`/c/${c.toLowerCase()}`} class={current === c ? "active" : ""}>{c}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  // Keyboard shortcut: "/" focuses search
+  window.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)) {
+      e.preventDefault();
+      const el = document.getElementById('q');
+      if (el) el.style.display = 'block';
+      el?.focus();
+    }
+  });
+  // Lightweight client-side search redirect
+  const input = document.getElementById('q');
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const q = input.value.trim();
+      if (q) window.location.href = `/search?q=${encodeURIComponent(q)}`;
+    }
+  });
+</script>

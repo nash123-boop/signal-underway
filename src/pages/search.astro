@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const q = (Astro.url.searchParams.get("q") ?? "").trim().toLowerCase();
+const posts = (await getCollection("posts"))
+  .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
+
+const hits = q
+  ? posts.filter(p =>
+      p.data.title.toLowerCase().includes(q) ||
+      p.data.deck.toLowerCase().includes(q) ||
+      p.data.category.toLowerCase().includes(q) ||
+      (p.data.tags ?? []).some(t => t.toLowerCase().includes(q))
+    )
+  : [];
+---
+<BaseLayout title={`Search — ${q || "Signal Underway"}`} noIndex={true}>
+  <h2 style="margin:14px 0 8px 0;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-size:13px">Search</h2>
+  {q ? (
+    <p style="color:var(--muted);margin-top:0">Results for <strong>{q}</strong> ({hits.length})</p>
+  ) : (
+    <p style="color:var(--muted);margin-top:0">Type a query in the top bar search (press <strong>/</strong>).</p>
+  )}
+  <div class="list" style="margin-top:10px">
+    {hits.map((p) => (
+      <a class="item" href={`/p/${p.slug}`}>
+        <div class="itemInner">
+          <div class="meta">
+            <span class="badge">{p.data.category}</span><span class="dot">•</span><span>{p.data.publishDate}</span>
+          </div>
+          <h3>{p.data.title}</h3>
+          <p>{p.data.deck}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

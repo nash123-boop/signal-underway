@@ -1,0 +1,62 @@
+---
+import "../styles/global.css";
+import TopBar from "../components/TopBar.astro";
+import Analytics from "../components/Analytics.astro";
+
+const {
+  title = "Signal Underway",
+  description = "Signals, patterns, and quiet movements of power — without the breaking-news noise.",
+  currentNav = "",
+  ogImage = "/og-default.png",
+  canonical = Astro.url.pathname,
+  noIndex = false,
+} = Astro.props;
+
+const site = Astro.site?.toString() ?? "https://signal-underway.example";
+const canonicalUrl = new URL(canonical, site).toString();
+const og = new URL(ogImage, site).toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noIndex && <meta name="robots" content="noindex,nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={og} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={og} />
+
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body>
+    <TopBar current={currentNav} />
+    <main class="container">
+      <slot />
+      <footer class="footer">
+        <div class="container" style="padding:0">
+          <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <div>© {new Date().getFullYear()} Signal Underway</div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <a href="/about">About</a>
+              <a href="/method">Method</a>
+              <a href="/privacy">Privacy</a>
+              <a href="/rss.xml">RSS</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+    <Analytics />
+  </body>
+</html>

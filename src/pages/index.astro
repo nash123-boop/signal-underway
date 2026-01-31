@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("posts"))
+  .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
+
+const featured = posts.find(p => p.data.featured) ?? posts[0];
+const secondary = posts.filter(p => p.id !== featured.id).slice(0, 4);
+const latest = posts.filter(p => p.id !== featured.id).slice(0, 12);
+---
+<BaseLayout
+  title="Signal Underway — The future doesn’t announce itself."
+  description="Signals, patterns, and quiet movements of power — designed for mobile, built for repeat reading."
+  ogImage="/og-default.png"
+>
+  <section class="hero">
+    <div class="heroInner">
+      <div class="pillrow">
+        <span class="pill">Signals</span>
+        <span class="pill">Quiet Power</span>
+        <span class="pill">Future Already Underway</span>
+      </div>
+      <a href={`/p/${featured.slug}`}>
+        <h2 class="headline">{featured.data.title}</h2>
+        <p class="deck">{featured.data.deck}</p>
+      </a>
+      <div class="heroCtas">
+        <a class="btn primary" href={`/p/${featured.slug}`}>Read the signal</a>
+        <a class="btn" href="/latest">Browse latest</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      {featured.data.cover && <img class="cover" src={featured.data.cover} alt="" loading="eager" />}
+      <div class="cardInner">
+        <div class="meta">
+          <span class="badge">{featured.data.category}</span>
+          <span class="dot">•</span>
+          <span>{featured.data.publishDate}</span>
+        </div>
+        <div class="hr"></div>
+        <div class="callout">
+          <strong>How to read this site:</strong> We publish <em>signals</em> — grounded patterns with open-ended implications.
+          We never claim certainty. We show the trail.
+        </div>
+      </div>
+    </div>
+
+    <aside class="list">
+      {secondary.map((p) => (
+        <a class="item" href={`/p/${p.slug}`}>
+          {p.data.cover && <img class="cover" src={p.data.cover} alt="" loading="lazy" />}
+          <div class="itemInner">
+            <div class="meta">
+              <span class="badge">{p.data.category}</span><span class="dot">•</span><span>{p.data.publishDate}</span>
+            </div>
+            <h3>{p.data.title}</h3>
+            <p>{p.data.deck}</p>
+          </div>
+        </a>
+      ))}
+    </aside>
+  </section>
+
+  <section style="margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap">
+      <h2 style="margin:0;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">Latest signals</h2>
+      <a class="btn" href="/latest">See all</a>
+    </div>
+    <div class="list" style="margin-top:10px">
+      {latest.map((p) => (
+        <a class="item" href={`/p/${p.slug}`}>
+          <div class="itemInner">
+            <div class="meta">
+              <span class="badge">{p.data.category}</span><span class="dot">•</span><span>{p.data.publishDate}</span>
+            </div>
+            <h3>{p.data.title}</h3>
+            <p>{p.data.deck}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
