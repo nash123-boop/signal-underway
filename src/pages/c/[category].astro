@@ -3,7 +3,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { categories } from "../../lib/categories";
 
-// ✅ Required for static builds with dynamic routes
+// ✅ Required for static builds with dynamic routes (static build)
+
 export async function getStaticPaths() {
   return categories.map((c) => ({
     params: { category: c.toLowerCase() },
