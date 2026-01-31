@@ -24,6 +24,12 @@ const coverOf = (p) => p?.data?.cover ?? "/og-default.png";
       <h1>{hero?.data?.title ?? "The pattern is the story."}</h1>
       <p>{hero?.data?.deck ?? "We track signals — publicly visible traces that hint at what’s forming."}</p>
 
+      {hero && (
+        <a href={`/p/${hero.slug}`} class="heroImage" aria-label="Open lead story">
+          <img src={coverOf(hero)} alt="" loading="eager" decoding="async" />
+        </a>
+      )}
+
       <div class="heroActions">
         {hero && <a class="btn primary" href={`/p/${hero.slug}`}>Read the signal</a>}
         <a class="btn" href="/latest">Browse latest</a>
@@ -47,12 +53,7 @@ const coverOf = (p) => p?.data?.cover ?? "/og-default.png";
               </div>
 
               <div class="thumb" aria-hidden="true">
-                <img
-                  src={coverOf(p)}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
+                <img src={coverOf(p)} alt="" loading="lazy" decoding="async" />
               </div>
             </a>
           ))}
@@ -70,17 +71,12 @@ const coverOf = (p) => p?.data?.cover ?? "/og-default.png";
                   <span class="badge">{p.data.category}</span>
                   <span>{p.data.publishDate}</span>
                 </div>
-                <h3>{p.data.title}</h3>
+                <h3 style="font-size:18px">{p.data.title}</h3>
                 <p>{p.data.deck}</p>
               </div>
 
               <div class="thumb railThumb" aria-hidden="true">
-                <img
-                  src={coverOf(p)}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
+                <img src={coverOf(p)} alt="" loading="lazy" decoding="async" />
               </div>
             </a>
           ))}
