@@ -1,62 +1,72 @@
 ---
-import "../styles/global.css";
-import TopBar from "../components/TopBar.astro";
-import Analytics from "../components/Analytics.astro";
-
 const {
   title = "The National Signal",
   description = "Tracking patterns shaping what comes next.",
-  currentNav = "",
   ogImage = "/og-default.png",
-  canonical = Astro.url.pathname,
-  noIndex = false,
+  currentNav = "Latest",
 } = Astro.props;
 
-const site = Astro.site?.toString() ?? "https://thenationalsignal.pages.dev";
-const canonicalUrl = new URL(canonical, site).toString();
-const og = new URL(ogImage, site).toString();
+const year = new Date().getFullYear();
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
-    {noIndex && <meta name="robots" content="noindex,nofollow" />}
 
-    <meta property="og:type" content="website" />
+    <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={og} />
-
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={og} />
 
-    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles/global.css" />
   </head>
+
   <body>
-    <TopBar current={currentNav} />
-    <main class="container">
-      <slot />
-      <footer class="footer">
-        <div class="container" style="padding:0">
-          <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
-            <div>© {new Date().getFullYear()} The National Signal</div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap">
-              <a href="/about">About</a>
-              <a href="/method">Method</a>
-              <a href="/privacy">Privacy</a>
-              <a href="/rss.xml">RSS</a>
-            </div>
+    <header class="siteHeader">
+      <div class="container headerInner">
+        <a class="brand" href="/" aria-label="Home">
+          <div class="brandMark" aria-hidden="true"></div>
+          <div class="brandText">
+            <div class="brandName">The National Signal</div>
+            <div class="brandTag">{description}</div>
           </div>
-        </div>
-      </footer>
+        </a>
+
+        <form class="search" action="/search" method="get">
+          <label class="srOnly" for="q">Search signals</label>
+          <input id="q" name="q" type="search" placeholder="Search signals…" />
+          <kbd class="kbd" aria-hidden="true">/</kbd>
+        </form>
+
+        <nav class="nav" aria-label="Primary">
+          <a class={currentNav === "Latest" ? "active" : ""} href="/latest">Latest</a>
+          <a class={currentNav === "World" ? "active" : ""} href="/c/world">World</a>
+          <a class={currentNav === "Politics" ? "active" : ""} href="/c/politics">Politics</a>
+          <a class={currentNav === "Business" ? "active" : ""} href="/c/business">Business</a>
+          <a class={currentNav === "Technology" ? "active" : ""} href="/c/technology">Technology</a>
+          <a class={currentNav === "Culture" ? "active" : ""} href="/c/culture">Culture</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page">
+      <slot />
     </main>
-    <Analytics />
+
+    <footer class="siteFooter">
+      <div class="container footerInner">
+        <div>© {year} The National Signal</div>
+        <div class="footerLinks">
+          <a href="/about">About</a>
+          <a href="/method">Method</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/rss.xml">RSS</a>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
