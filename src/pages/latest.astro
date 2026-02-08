@@ -1,35 +1,84 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { categoryBanner, coverFor } from "../lib/covers";
 
 const posts = (await getCollection("posts"))
   .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
 
-const coverOf = (p) => p?.data?.cover ?? "/og-default.png";
+const banner = categoryBanner("latest");
 ---
 
-<BaseLayout title="Latest — The National Signal" description="All recent signals.">
-  <div class="sectionHeader">
-    <div class="sectionKicker">The feed</div>
-    <h1>Latest</h1>
-    <p>Fresh signals, cleanly ranked by publish date.</p>
-  </div>
+<BaseLayout title="Latest — The National Signal" currentNav="Latest">
+  <main class="page">
+    <header class="mast">
+      <div class="mastText">
+        <div class="crumb">Latest</div>
+        <h1>Latest</h1>
+        <p class="sub">Fresh signals, ranked by publish date.</p>
+      </div>
 
-  <div class="list">
-    {posts.map((p) => (
-      <a class="item" href={`/p/${p.slug}`}>
-        <div class="itemInner">
-          <div class="meta">
-            <span class="badge">{p.data.category}</span>
-            <span>{p.data.publishDate}</span>
+      <div class="mastMedia">
+        <img
+          src={banner}
+          alt=""
+          loading="eager"
+          onerror="this.onerror=null;this.src='/covers/default.webp';"
+        />
+      </div>
+    </header>
+
+    <section class="list">
+      {posts.map((p) => (
+        <a class="row" href={`/p/${p.slug}`}>
+          <div class="rowText">
+            <div class="meta">
+              <span class="badge">{p.data.category}</span>
+              <span class="dot">•</span>
+              <span>{p.data.publishDate}</span>
+            </div>
+            <h2>{p.data.title}</h2>
+            <p>{p.data.deck}</p>
           </div>
-          <h3>{p.data.title}</h3>
-          <p>{p.data.deck}</p>
-        </div>
-        <div class="thumb" aria-hidden="true">
-          <img src={coverOf(p)} alt="" loading="lazy" decoding="async" />
-        </div>
-      </a>
-    ))}
-  </div>
+
+          <div class="thumb">
+            <img
+              src={coverFor(p)}
+              alt=""
+              loading="lazy"
+              onerror="this.onerror=null;this.src='/covers/default.webp';"
+            />
+          </div>
+        </a>
+      ))}
+    </section>
+  </main>
+
+  <style>
+    .page{max-width:1100px;margin:0 auto;padding:18px 14px;}
+    .mast{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:stretch;padding:8px 0 18px;border-bottom:1px solid var(--line);}
+    .crumb{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    .mastText h1{margin:0;font-size:44px;line-height:1.05}
+    .sub{margin:10px 0 0 0;color:var(--muted);max-width:60ch}
+    .mastMedia{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--soft);min-height:220px}
+    .mastMedia img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .list{display:flex;flex-direction:column;gap:12px;padding:14px 0}
+    .row{display:grid;grid-template-columns:1fr 180px;gap:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card);text-decoration:none}
+    .row:hover{transform:translateY(-1px)}
+    .meta{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
+    .badge{border:1px solid var(--line);border-radius:999px;padding:4px 8px;background:var(--soft);color:var(--fg)}
+    .dot{opacity:.6}
+    .rowText h2{margin:8px 0 6px 0;font-size:20px;line-height:1.2;color:var(--fg)}
+    .rowText p{margin:0;color:var(--muted);font-size:14px}
+    .thumb{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--soft);height:120px}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+    @media (max-width: 860px){
+      .mast{grid-template-columns:1fr}
+      .mastText h1{font-size:34px}
+      .row{grid-template-columns:1fr}
+      .thumb{height:210px}
+    }
+  </style>
 </BaseLayout>
