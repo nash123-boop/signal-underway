@@ -1,94 +1,112 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { coverFor } from "../lib/covers";
 
 const posts = (await getCollection("posts"))
   .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
 
 const hero = posts[0];
-const rightRail = posts.slice(1, 4);
 const latest = posts.slice(1, 9);
-
-const coverOf = (p) => p?.data?.cover ?? "/og-default.png";
 ---
 
-<BaseLayout title="The National Signal" description="Tracking patterns shaping what comes next.">
-  <div class="home">
-    <div class="hero">
-      <div class="heroKicker">
-        <span class="kickerPill">Signals</span>
-        <span class="kickerPill">Quiet Power</span>
-        <span class="kickerPill">What Moves Next</span>
-      </div>
+<BaseLayout title="The National Signal" currentNav="Latest">
+  <main class="home">
+    {hero && (
+      <section class="hero">
+        <div class="heroText">
+          <div class="kickers">
+            <span class="k">Signals</span>
+            <span class="k">Quiet Power</span>
+            <span class="k">What Moves Next</span>
+          </div>
 
-      <h1>{hero?.data?.title ?? "The pattern is the story."}</h1>
-      <p>{hero?.data?.deck ?? "We track signals — publicly visible traces that hint at what’s forming."}</p>
+          <h1 class="heroTitle">{hero.data.title}</h1>
+          <p class="heroDeck">{hero.data.deck}</p>
 
-      {hero && (
-        <a href={`/p/${hero.slug}`} class="heroImage" aria-label="Open lead story">
-          <img src={coverOf(hero)} alt="" loading="eager" decoding="async" />
+          <div class="heroActions">
+            <a class="btn primary" href={`/p/${hero.slug}`}>Read the signal</a>
+            <a class="btn" href="/latest">Browse latest</a>
+          </div>
+        </div>
+
+        <a class="heroMedia" href={`/p/${hero.slug}`}>
+          <img
+            src={coverFor(hero)}
+            alt=""
+            loading="eager"
+            onerror="this.onerror=null;this.src='/covers/default.webp';"
+          />
         </a>
-      )}
-
-      <div class="heroActions">
-        {hero && <a class="btn primary" href={`/p/${hero.slug}`}>Read the signal</a>}
-        <a class="btn" href="/latest">Browse latest</a>
-      </div>
-    </div>
-
-    <div class="homeGrid">
-      <section>
-        <div class="sectionTitle">Latest</div>
-
-        <div class="list">
-          {latest.map((p) => (
-            <a class="item" href={`/p/${p.slug}`}>
-              <div class="itemInner">
-                <div class="meta">
-                  <span class="badge">{p.data.category}</span>
-                  <span>{p.data.publishDate}</span>
-                </div>
-                <h3>{p.data.title}</h3>
-                <p>{p.data.deck}</p>
-              </div>
-
-              <div class="thumb" aria-hidden="true">
-                <img src={coverOf(p)} alt="" loading="lazy" decoding="async" />
-              </div>
-            </a>
-          ))}
-        </div>
       </section>
+    )}
 
-      <aside>
-        <div class="sectionTitle">Watchlist</div>
+    <section class="feed">
+      <div class="feedHeader">
+        <h2>Latest</h2>
+      </div>
 
-        <div class="list">
-          {rightRail.map((p) => (
-            <a class="item railItem" href={`/p/${p.slug}`}>
-              <div class="itemInner">
-                <div class="meta">
-                  <span class="badge">{p.data.category}</span>
-                  <span>{p.data.publishDate}</span>
-                </div>
-                <h3 style="font-size:18px">{p.data.title}</h3>
-                <p>{p.data.deck}</p>
+      <div class="list">
+        {latest.map((p) => (
+          <a class="item" href={`/p/${p.slug}`}>
+            <div class="itemInner">
+              <div class="meta">
+                <span class="badge">{p.data.category}</span>
+                <span class="dot">•</span>
+                <span>{p.data.publishDate}</span>
               </div>
+              <h3>{p.data.title}</h3>
+              <p>{p.data.deck}</p>
+            </div>
 
-              <div class="thumb railThumb" aria-hidden="true">
-                <img src={coverOf(p)} alt="" loading="lazy" decoding="async" />
-              </div>
-            </a>
-          ))}
-        </div>
+            <div class="thumb">
+              <img
+                src={coverFor(p)}
+                alt=""
+                loading="lazy"
+                onerror="this.onerror=null;this.src='/covers/default.webp';"
+              />
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
 
-        <div class="hr"></div>
+  <style>
+    .home{max-width:1100px;margin:0 auto;padding:18px 14px;}
+    .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;align-items:stretch;padding:18px 0;border-bottom:1px solid var(--line);}
+    .heroText{padding-right:8px}
+    .kickers{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .k{font-size:12px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--soft)}
+    .heroTitle{font-size:48px;line-height:1.05;margin:0 0 10px 0}
+    .heroDeck{margin:0 0 14px 0;color:var(--muted);font-size:16px;max-width:58ch}
+    .heroActions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--soft);text-decoration:none}
+    .btn.primary{background:#111;color:#fff;border-color:#111}
+    .heroMedia{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--soft);min-height:280px;display:block}
+    .heroMedia img{width:100%;height:100%;object-fit:cover;display:block}
 
-        <div class="callout">
-          <strong>How to read this site:</strong> We publish <em>signals</em> — grounded patterns with open-ended implications.
-          We don’t do breaking news. We show the trail.
-        </div>
-      </aside>
-    </div>
-  </div>
+    .feedHeader{display:flex;align-items:center;justify-content:space-between;margin:16px 0 10px}
+    .feedHeader h2{margin:0;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .list{display:flex;flex-direction:column;gap:12px}
+    .item{display:grid;grid-template-columns:1fr 140px;gap:12px;padding:12px;border:1px solid var(--line);border-radius:14px;text-decoration:none;background:var(--card)}
+    .item:hover{transform:translateY(-1px)}
+    .itemInner h3{margin:6px 0 6px 0;color:var(--fg);font-size:18px;line-height:1.2}
+    .itemInner p{margin:0;color:var(--muted);font-size:14px}
+    .thumb{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--soft);height:96px}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .meta{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
+    .badge{border:1px solid var(--line);border-radius:999px;padding:4px 8px;background:var(--soft);color:var(--fg)}
+    .dot{opacity:.6}
+
+    @media (max-width: 860px){
+      .hero{grid-template-columns:1fr}
+      .heroTitle{font-size:36px}
+      .heroMedia{min-height:220px}
+      .item{grid-template-columns:1fr}
+      .thumb{height:200px}
+    }
+  </style>
 </BaseLayout>
