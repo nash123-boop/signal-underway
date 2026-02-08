@@ -1,13 +1,112 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { coverFor, categoryBanner, defaultCover } from "../lib/covers";
+
+const posts = (await getCollection("posts"))
+  .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
+
+const hero = posts[0];
+const latest = posts.slice(1, 9);
+
+const catFallback = (p) => categoryBanner(p?.data?.category ?? "default");
 ---
-<BaseLayout title="About — Signal Underway">
-  <div class="article" style="margin-top:14px">
-    <h2 style="margin:0 0 10px 0">About</h2>
-    <p class="deck">Signal Underway is a mobile-first publication that tracks patterns, projects, and quiet movements of power — without the breaking-news noise.</p>
-    <div class="callout">
-      We publish <strong>signals</strong>: grounded observations + plausible implications.
-      We avoid certainty. We show the trail.
-    </div>
-  </div>
+
+<BaseLayout title="The National Signal" currentNav="Latest">
+  <main class="home">
+    {hero && (
+      <section class="hero">
+        <div class="heroText">
+          <div class="kickers">
+            <span class="k">Signals</span>
+            <span class="k">Quiet Power</span>
+            <span class="k">What Moves Next</span>
+          </div>
+
+          <h1 class="heroTitle">{hero.data.title}</h1>
+          <p class="heroDeck">{hero.data.deck}</p>
+
+          <div class="heroActions">
+            <a class="btn primary" href={`/p/${hero.slug}`}>Read the signal</a>
+            <a class="btn" href="/latest">Browse latest</a>
+          </div>
+        </div>
+
+        <a class="heroMedia" href={`/p/${hero.slug}`}>
+          <img
+            src={coverFor(hero)}
+            alt=""
+            loading="eager"
+            onerror={`this.onerror=null;this.src='${catFallback(hero)}';this.onerror=function(){this.onerror=null;this.src='${defaultCover()}';};`}
+          />
+        </a>
+      </section>
+    )}
+
+    <section class="feed">
+      <div class="feedHeader">
+        <h2>Latest</h2>
+      </div>
+
+      <div class="list">
+        {latest.map((p) => (
+          <a class="row" href={`/p/${p.slug}`}>
+            <div class="rowText">
+              <div class="meta">
+                <span class="badge">{p.data.category}</span>
+                <span class="dot">•</span>
+                <span>{p.data.publishDate}</span>
+              </div>
+              <h2>{p.data.title}</h2>
+              <p>{p.data.deck}</p>
+            </div>
+
+            <div class="thumb">
+              <img
+                src={coverFor(p)}
+                alt=""
+                loading="lazy"
+                onerror={`this.onerror=null;this.src='${catFallback(p)}';this.onerror=function(){this.onerror=null;this.src='${defaultCover()}';};`}
+              />
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .home{max-width:1100px;margin:0 auto;padding:18px 14px;}
+    .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;align-items:stretch;padding:18px 0;border-bottom:1px solid var(--line);}
+    .kickers{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .k{font-size:12px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--soft)}
+    .heroTitle{font-size:48px;line-height:1.05;margin:0 0 10px 0}
+    .heroDeck{margin:0 0 14px 0;color:var(--muted);font-size:16px;max-width:58ch}
+    .heroActions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--soft);text-decoration:none}
+    .btn.primary{background:#111;color:#fff;border-color:#111}
+    .heroMedia{border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--soft);min-height:280px;display:block}
+    .heroMedia img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .feedHeader{margin:16px 0 10px}
+    .feedHeader h2{margin:0;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .list{display:flex;flex-direction:column;gap:12px;padding:14px 0}
+    .row{display:grid;grid-template-columns:1fr 180px;gap:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card);text-decoration:none}
+    .rowText h2{margin:8px 0 6px 0;font-size:20px;line-height:1.2;color:var(--fg)}
+    .rowText p{margin:0;color:var(--muted);font-size:14px}
+    .thumb{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--soft);height:120px}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .meta{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted)}
+    .badge{border:1px solid var(--line);border-radius:999px;padding:4px 8px;background:var(--soft);color:var(--fg)}
+    .dot{opacity:.6}
+
+    @media (max-width: 860px){
+      .hero{grid-template-columns:1fr}
+      .heroTitle{font-size:36px}
+      .heroMedia{min-height:220px}
+      .row{grid-template-columns:1fr}
+      .thumb{height:210px}
+    }
+  </style>
 </BaseLayout>
