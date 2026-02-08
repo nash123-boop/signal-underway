@@ -5,7 +5,8 @@ category: "World"
 publishDate: "2026-01-29"
 tags: ["Infrastructure", "Signals", "Megaprojects"]
 featured: true
-cover: "/covers/cover1.jpg"
+cover: "/posts/test.webp"
+
 ---
 
 **Opening signal:** The numbers don’t match the story. If this were a normal city build-out, the permits, suppliers, and logistics would leave a loud trail.
