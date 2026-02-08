@@ -8,20 +8,20 @@ export function coverFor(postOrCategory: any): string {
   const explicitCover =
     typeof postOrCategory === "object" ? postOrCategory?.data?.cover : null;
 
+  // If a post explicitly sets a cover, use it
   if (explicitCover && typeof explicitCover === "string") return explicitCover;
 
   const c = String(category || "default").toLowerCase();
 
   const map: Record<string, string> = {
-    world: "/covers/world.jpg",
-    politics: "/covers/politics.jpg",
-    business: "/covers/business.jpg",
-    technology: "/covers/technology.jpg",
-    culture: "/covers/culture.jpg",
-    latest: "/covers/default.jpg",
-    default: "/covers/default.jpg",
+    world: "/covers/world.webp",
+    politics: "/covers/politics.webp",
+    business: "/covers/business.webp",
+    technology: "/covers/technology.webp",
+    culture: "/covers/culture.webp",
+    latest: "/covers/default.webp",
+    default: "/covers/default.webp",
   };
 
   return map[c] ?? map.default;
 }
-
