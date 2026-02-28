@@ -1,10 +1,13 @@
 ---
+---
 title: "Why Cash Feels Different Now"
-deck: "Small signals suggest money is changing shape again."
+deck: "..."
 category: "Business"
 publishDate: "2026-02-14"
-tags: ["Finance", "Currency", "Signals"]
+tags: ["..."]
 featured: false
+cover: "/posts/why-cash-feels-different-now.png"
+---
 ---
 
 **Opening signal:** Something subtle is happening around how cash moves.
