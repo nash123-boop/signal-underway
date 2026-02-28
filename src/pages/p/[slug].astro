@@ -1,8 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { categoryBanner } from "../../lib/covers";
 
-// Generate static paths
+// ✅ Required for static builds with dynamic routes
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
   return posts.map((p) => ({
@@ -17,53 +18,127 @@ const post = posts.find((p) => p.id === id);
 
 if (!post) return Astro.redirect("/latest");
 
-// 🔥 AUTOMATIC COVER SYSTEM
-const category = post.data.category?.toLowerCase() ?? "";
-const coverImage = `/covers/${category}.jpg`;
-const fallbackImage = "/covers/default.jpg";
-
-const finalCover = coverImage;
-
 // Related posts
 const others = posts
   .filter((p) => p.id !== post.id)
   .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate))
   .slice(0, 4);
 
+// ✅ Build a robust list of possible image URLs (works even if you upload png/jpg/webp)
+const slug = post.slug;
+const explicitCover = post.data.cover ? String(post.data.cover).trim() : "";
+const catFallback = categoryBanner(post.data.category ?? "default");
+
+const candidates = [
+  explicitCover,
+  `/posts/${slug}.webp`,
+  `/posts/${slug}.png`,
+  `/posts/${slug}.jpg`,
+  catFallback,
+  "/covers/default.webp",
+].filter((x, i, arr) => x && arr.indexOf(x) === i); // remove empties + duplicates
+
+const heroImage = candidates[0];
+
+// JSON-LD / OG
 const site = Astro.site?.toString() ?? "https://signal-underway.pages.dev";
 const url = new URL(`/p/${post.slug}`, site).toString();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.data.title,
+  description: post.data.deck,
+  datePublished: post.data.publishDate,
+  author: { "@type": "Organization", name: "The National Signal" },
+  mainEntityOfPage: url,
+  image: new URL(heroImage, site).toString(),
+  publisher: { "@type": "Organization", name: "The National Signal" },
+};
 ---
 
 <BaseLayout
   title={`${post.data.title} — The National Signal`}
   description={post.data.deck}
-  ogImage={finalCover}
+  ogImage={heroImage}
 >
-
   <article class="article">
+    <div class="pillrow" style="margin-top:14px">
+      <span class="pill">{post.data.category}</span>
+      {post.data.tags?.slice(0, 3).map((t) => <span class="pill">{t}</span>)}
+    </div>
 
     <h1>{post.data.title}</h1>
     <p class="sub">{post.data.deck}</p>
 
-    <!-- 🔥 ALWAYS SHOW COVER IMAGE -->
-    <img
-      src={finalCover}
-      alt=""
-      loading="eager"
-      style="width:100%;height:420px;object-fit:cover;margin:20px 0;"
-      onerror={`this.onerror=null;this.src='${fallbackImage}'`}
-    />
+    <!-- ✅ Always try the best image; if it fails, auto-try the next -->
+    <div class="heroImage" style="margin-top:14px">
+      <img
+        id="postHero"
+        src={heroImage}
+        data-srcs={JSON.stringify(candidates)}
+        alt=""
+        loading="eager"
+        style="height:320px;border-radius:12px;border:1px solid var(--line);object-fit:cover;width:100%;display:block;background:var(--soft);"
+      />
+    </div>
 
-    <div class="meta">
-      <span>{post.data.category}</span>
-      <span>•</span>
+    <div class="meta" style="margin-top:12px">
+      <span>Published</span>
+      <span class="dot">•</span>
       <span>{post.data.publishDate}</span>
     </div>
+
+    <div class="hr"></div>
 
     <div class="prose">
       <slot />
     </div>
 
+    <div class="hr"></div>
+
+    <section class="readnext">
+      <h2 style="margin:18px 0 6px 0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">
+        Read next
+      </h2>
+      {others.map((p) => (
+        <a class="item" href={`/p/${p.slug}`}>
+          <div class="itemInner">
+            <div class="meta">
+              <span class="badge">{p.data.category}</span>
+              <span class="dot">•</span>
+              <span>{p.data.publishDate}</span>
+            </div>
+            <h3>{p.data.title}</h3>
+            <p>{p.data.deck}</p>
+          </div>
+        </a>
+      ))}
+    </section>
   </article>
 
+  <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+
+  <script>
+    // Robust fallback chain: webp -> png -> jpg -> category -> default
+    (function () {
+      const img = document.getElementById("postHero");
+      if (!img) return;
+
+      let srcs = [];
+      try {
+        srcs = JSON.parse(img.getAttribute("data-srcs") || "[]");
+      } catch (_) {
+        srcs = [];
+      }
+
+      let idx = 0;
+      img.addEventListener("error", () => {
+        idx += 1;
+        if (idx < srcs.length) {
+          img.src = srcs[idx];
+        }
+      });
+    })();
+  </script>
 </BaseLayout>
