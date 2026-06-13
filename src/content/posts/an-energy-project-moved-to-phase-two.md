@@ -10,17 +10,17 @@ The first phase always sounds like a pilot.
 
 The second phase is where you discover what it was really for.
 
-## The trace
+## The Trace
 Look for:
 - Step-change in procurement scale
 - New contractors with defense-adjacent portfolios
 - Sudden emphasis on resilience and redundancy
 
-## What it implies
+## What It Implies
 If the objective is **continuity under stress**, the architecture makes sense:
 - multiple inputs
 - multiple outputs
 - fewer single points of failure
 
-## The uneasy ending
+## The Uneasy Ending
 If this grid is being built to survive something, what scenario are they designing for?

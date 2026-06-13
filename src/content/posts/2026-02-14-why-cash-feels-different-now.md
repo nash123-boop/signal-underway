@@ -11,7 +11,7 @@ cover: "/posts/why-cash-feels-different-now.png"
 
 **Opening signal:** Something subtle is happening around how cash moves.
 
-## The traces
+## The Traces
 
 - Retail policies are changing in ways that make cash less convenient.
 - ATM networks are shrinking in some markets while being upgraded in others.
@@ -19,13 +19,13 @@ cover: "/posts/why-cash-feels-different-now.png"
 
 Each trace can have an ordinary explanation. The useful question is whether they begin moving together.
 
-## What it could mean
+## What It Could Mean
 
 This may not be about eliminating cash. It may be about changing where cash remains practical, who carries the cost of handling it, and which transactions become easier to observe.
 
 The distinction matters. Cash can remain legal while becoming progressively harder to use.
 
-## What to watch next
+## What to Watch Next
 
 - Regulatory filings concerning access to cash
 - Bank announcements about branch and ATM coverage

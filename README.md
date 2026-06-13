@@ -28,6 +28,8 @@ npm run dev
 ## 3) Add/modify articles
 Articles live in `src/content/posts/*.md`.
 
+Use `ARTICLE_POLISH_PROMPT.md` when preparing articles with an AI. The build validator enforces publication title case, heading levels, and template-safe Markdown.
+
 Each post has frontmatter:
 - title
 - deck (one-line hook)
