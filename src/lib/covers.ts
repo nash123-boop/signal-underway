@@ -25,3 +25,7 @@ export function categoryBanner(category: string): string {
   const key = NORMALIZE(category || "default");
   return CATEGORY_MAP[key] ?? CATEGORY_MAP.default;
 }
+
+export function defaultCover(): string {
+  return CATEGORY_MAP.default;
+}
