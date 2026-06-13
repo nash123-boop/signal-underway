@@ -59,14 +59,14 @@ const jsonLd = {
   ogImage={heroImage}
   canonical={url}
 >
-  <article class="article">
-    <div class="pillrow">
+  <article class="article publicationArticle">
+    <div class="signalPills">
       <a class="pill" href={`/c/${post.data.category.toLowerCase()}`}>{post.data.category}</a>
       {post.data.tags.slice(0, 3).map((tag) => <span class="pill">{tag}</span>)}
     </div>
 
     <h1>{post.data.title}</h1>
-    <p class="sub">{post.data.deck}</p>
+    <p class="pageDeck">{post.data.deck}</p>
 
     <div class="heroImage">
       <img id="postHero" src={heroImage} data-srcs={JSON.stringify(candidates)} alt={`Lead image for ${post.data.title}`} loading="eager" />
@@ -97,8 +97,8 @@ const jsonLd = {
     <section class="readnext">
       <h2>Read next</h2>
       {others.map((entry) => (
-        <a class="item" href={`/p/${entry.slug}`}>
-          <div class="itemInner">
+        <a class="storyCard relatedCard" href={`/p/${entry.slug}`}>
+          <div class="storyCardText">
             <div class="meta"><span class="badge">{entry.data.category}</span><span>{entry.data.publishDate}</span></div>
             <h3>{entry.data.title}</h3><p>{entry.data.deck}</p>
           </div>

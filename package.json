@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "lint": "node ./scripts/lint-frontmatter.mjs",
     "check:links": "node ./scripts/check-links.mjs",
-    "check": "npm run lint && npm run check:links && astro build",
+    "check:design": "node ./scripts/check-design.mjs",
+    "check": "npm run lint && npm run check:links && npm run check:design && astro build",
     "new:post": "node ./scripts/new-post.mjs"
   },
   "dependencies": {

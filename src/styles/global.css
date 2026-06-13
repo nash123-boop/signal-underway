@@ -7,6 +7,11 @@
 
   --radius:12px;
   --max:1180px;
+  --content:760px;
+  --title-size:clamp(40px,5vw,54px);
+  --title-size-mobile:clamp(34px,10vw,42px);
+  --deck-size:16px;
+  --body-size:17px;
 
   --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, "EB Garamond", Georgia, serif;
   --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -468,4 +473,88 @@ img{ max-width:100%; }
   .infoGrid section h2{ font-size:21px; }
   .infoGrid section p{ font-size:15px; line-height:1.6; }
   .infoActions{ display:grid; grid-template-columns:1fr; }
+}
+
+/* Unified publication system. All pages and future articles inherit this. */
+.publicationPage{ max-width:1100px; margin:0 auto; padding:18px 14px 48px; }
+.signalPills{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+.signalPills span,.signalPills a{ display:inline-flex; align-items:center; min-height:32px; padding:5px 10px; border:1px solid var(--line); border-radius:999px; background:var(--soft); font-family:var(--sans); font-size:12px; line-height:1; }
+.pageDeck{ max-width:68ch; margin:0; color:var(--muted); font-family:var(--sans); font-size:var(--deck-size); line-height:1.6; }
+.pageActions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
+.sectionLabel{ margin:0 0 12px; color:var(--muted); font-family:var(--sans); font-size:13px; letter-spacing:.12em; text-transform:uppercase; }
+
+.leadStory{ display:grid; grid-template-columns:1.2fr 1fr; gap:22px; align-items:stretch; padding:18px 0 22px; border-bottom:1px solid var(--line); }
+.leadStoryText{ align-self:center; }
+.leadStory h1,.archiveHero h1,.infoPage h1,.publicationArticle h1,.searchPage h1{ margin:0 0 12px; font-family:var(--serif); font-size:var(--title-size); font-weight:900; letter-spacing:-.025em; line-height:1.04; text-wrap:balance; }
+.leadStoryMedia,.archiveMedia{ display:block; overflow:hidden; border:1px solid var(--line); border-radius:14px; background:var(--soft); }
+.leadStoryMedia{ min-height:280px; }
+.leadStoryMedia img,.archiveMedia img{ width:100%; height:100%; display:block; object-fit:cover; }
+
+.storyFeed{ padding-top:20px; }
+.storyList{ display:flex; flex-direction:column; gap:12px; }
+.storyCard{ display:grid; grid-template-columns:1fr 140px; gap:14px; padding:14px; border:1px solid var(--line); border-radius:14px; background:#fff; text-decoration:none; }
+.storyCard:hover{ text-decoration:none; background:var(--soft); }
+.storyCardText h3{ margin:7px 0 6px; color:var(--text); font-family:var(--serif); font-size:20px; font-weight:800; line-height:1.2; }
+.storyCardText p{ max-width:72ch; margin:0; color:var(--muted); font-family:var(--sans); font-size:14px; line-height:1.55; }
+.storyThumb{ width:140px; height:96px; overflow:hidden; border:1px solid var(--line); border-radius:11px; background:var(--soft); }
+.storyThumb img{ width:100%; height:100%; display:block; object-fit:cover; }
+
+.archiveHero{ display:grid; grid-template-columns:1.2fr 1fr; gap:18px; align-items:stretch; padding:8px 0 20px; border-bottom:1px solid var(--line); }
+.archiveHero>div:first-child{ align-self:center; }
+.archiveMedia{ min-height:220px; }
+.archiveList{ padding-top:14px; }
+
+.infoPage{ max-width:1100px; padding:18px 14px 56px; }
+.infoHero{ max-width:var(--content); padding:18px 0 28px; }
+.infoGrid section h2{ font-size:22px; }
+.infoGrid section p{ font-size:14px; line-height:1.65; }
+
+.publicationArticle{ max-width:var(--content); padding:24px 0 48px; }
+.publicationArticle .signalPills{ margin-top:0; }
+.publicationArticle .heroImage{ margin:22px 0 0; }
+.publicationArticle .heroImage img{ width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; }
+.publicationArticle .articleMeta{ margin-top:14px; font-family:var(--sans); }
+.publicationArticle .prose{ color:var(--text); font-family:var(--sans); font-size:var(--body-size); line-height:1.75; }
+.publicationArticle .prose h2{ margin:36px 0 12px; font-family:var(--serif); font-size:28px; line-height:1.2; }
+.publicationArticle .prose h3{ margin:28px 0 10px; font-family:var(--serif); font-size:22px; line-height:1.25; }
+.publicationArticle .prose p{ margin:0 0 20px; }
+.publicationArticle .prose li{ margin:8px 0; }
+.publicationArticle .prose strong{ font-weight:700; }
+.readnext{ margin-top:36px; padding-top:18px; }
+.readnext .storyList{ margin-top:10px; }
+.relatedCard{ grid-template-columns:1fr; padding:14px 0; border-width:1px 0 0; border-radius:0; }
+.relatedCard:first-of-type{ border-top:0; }
+
+.searchPage{ max-width:900px; padding-top:28px; }
+.searchPage .pageDeck{ margin-bottom:20px; }
+.searchResults{ margin-top:8px; }
+
+@media (max-width:860px){
+  .leadStory,.archiveHero{ grid-template-columns:1fr; }
+  .leadStoryMedia,.archiveMedia{ min-height:0; aspect-ratio:16/9; }
+  .storyCard{ grid-template-columns:1fr 112px; align-items:start; }
+  .storyThumb{ width:112px; height:82px; }
+}
+
+@media (max-width:560px){
+  .publicationPage,.infoPage{ padding:4px 0 36px; }
+  .leadStory{ gap:16px; padding:12px 0 20px; }
+  .leadStory h1,.archiveHero h1,.infoPage h1,.publicationArticle h1,.searchPage h1{ font-size:var(--title-size-mobile); }
+  .signalPills{ flex-wrap:nowrap; gap:6px; overflow-x:auto; scrollbar-width:none; }
+  .signalPills::-webkit-scrollbar{ display:none; }
+  .signalPills span,.signalPills a{ flex:0 0 auto; min-height:32px; white-space:nowrap; }
+  .pageDeck{ line-height:1.5; }
+  .pageActions{ display:grid; grid-template-columns:1fr 1fr; }
+  .pageActions .btn{ width:100%; }
+  .storyList{ gap:0; }
+  .storyCard{ grid-template-columns:1fr 96px; gap:12px; padding:16px 0; border-width:1px 0 0; border-radius:0; }
+  .storyCardText h3{ font-size:19px; }
+  .storyCardText p{ display:-webkit-box; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:2; font-size:14px; }
+  .storyThumb{ width:96px; height:76px; border-radius:9px; }
+  .archiveHero{ gap:14px; padding:8px 0 16px; }
+  .publicationArticle{ padding:12px 0 40px; }
+  .publicationArticle .prose{ font-size:17px; line-height:1.72; }
+  .publicationArticle .prose h2{ margin-top:32px; font-size:25px; }
+  .publicationArticle .prose h3{ font-size:21px; }
+  .relatedCard{ grid-template-columns:1fr; }
 }
