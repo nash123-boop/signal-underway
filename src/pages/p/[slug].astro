@@ -3,46 +3,41 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { categoryBanner } from "../../lib/covers";
 
-// ✅ Required for static builds with dynamic routes
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
-  return posts.map((p) => ({
-    params: { slug: p.slug },
-    props: { id: p.id },
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { id: post.id },
   }));
 }
 
 const { id } = Astro.props;
 const posts = await getCollection("posts");
-const post = posts.find((p) => p.id === id);
+const post = posts.find((entry) => entry.id === id);
 
 if (!post) return Astro.redirect("/latest");
 
-// Related posts
+const { Content } = await post.render();
 const others = posts
-  .filter((p) => p.id !== post.id)
+  .filter((entry) => entry.id !== post.id)
   .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate))
-  .slice(0, 4);
+  .slice(0, 3);
 
-// ✅ Build a robust list of possible image URLs (works even if you upload png/jpg/webp)
-const slug = post.slug;
-const explicitCover = post.data.cover ? String(post.data.cover).trim() : "";
-const catFallback = categoryBanner(post.data.category ?? "default");
-
+const explicitCover = String(post.data.cover || "").trim();
 const candidates = [
   explicitCover,
-  `/posts/${slug}.webp`,
-  `/posts/${slug}.png`,
-  `/posts/${slug}.jpg`,
-  catFallback,
+  `/posts/${post.slug}.webp`,
+  `/posts/${post.slug}.png`,
+  `/posts/${post.slug}.jpg`,
+  categoryBanner(post.data.category),
   "/covers/default.webp",
-].filter((x, i, arr) => x && arr.indexOf(x) === i); // remove empties + duplicates
+].filter((value, index, all) => value && all.indexOf(value) === index);
 
 const heroImage = candidates[0];
-
-// JSON-LD / OG
-const site = Astro.site?.toString() ?? "https://signal-underway.pages.dev";
+const site = Astro.site ?? new URL("https://signal-underway.pages.dev");
 const url = new URL(`/p/${post.slug}`, site).toString();
+const words = post.body.trim().split(/\s+/).filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.ceil(words / 220));
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -50,7 +45,8 @@ const jsonLd = {
   headline: post.data.title,
   description: post.data.deck,
   datePublished: post.data.publishDate,
-  author: { "@type": "Organization", name: "The National Signal" },
+  ...(post.data.updatedDate ? { dateModified: post.data.updatedDate } : {}),
+  author: { "@type": "Organization", name: post.data.author },
   mainEntityOfPage: url,
   image: new URL(heroImage, site).toString(),
   publisher: { "@type": "Organization", name: "The National Signal" },
@@ -58,87 +54,64 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title={`${post.data.title} — The National Signal`}
+  title={`${post.data.title} - The National Signal`}
   description={post.data.deck}
   ogImage={heroImage}
+  canonical={url}
 >
   <article class="article">
-    <div class="pillrow" style="margin-top:14px">
-      <span class="pill">{post.data.category}</span>
-      {post.data.tags?.slice(0, 3).map((t) => <span class="pill">{t}</span>)}
+    <div class="pillrow">
+      <a class="pill" href={`/c/${post.data.category.toLowerCase()}`}>{post.data.category}</a>
+      {post.data.tags.slice(0, 3).map((tag) => <span class="pill">{tag}</span>)}
     </div>
 
     <h1>{post.data.title}</h1>
     <p class="sub">{post.data.deck}</p>
 
-    <!-- ✅ Always try the best image; if it fails, auto-try the next -->
-    <div class="heroImage" style="margin-top:14px">
-      <img
-        id="postHero"
-        src={heroImage}
-        data-srcs={JSON.stringify(candidates)}
-        alt=""
-        loading="eager"
-        style="height:320px;border-radius:12px;border:1px solid var(--line);object-fit:cover;width:100%;display:block;background:var(--soft);"
-      />
+    <div class="heroImage">
+      <img id="postHero" src={heroImage} data-srcs={JSON.stringify(candidates)} alt={`Lead image for ${post.data.title}`} loading="eager" />
     </div>
 
-    <div class="meta" style="margin-top:12px">
-      <span>Published</span>
-      <span class="dot">•</span>
-      <span>{post.data.publishDate}</span>
+    <div class="meta articleMeta">
+      <span>{post.data.author}</span><span class="dot">&bull;</span>
+      <time datetime={post.data.publishDate}>{post.data.publishDate}</time><span class="dot">&bull;</span>
+      <span>{readingMinutes} min read</span>
     </div>
 
-    <div class="hr"></div>
+    <p class="analysisNote"><strong>Signal analysis:</strong> This article identifies observable patterns and separates evidence from possible implications. It is not a claim of certainty.</p>
 
-    <div class="prose">
-      <slot />
-    </div>
+    <div class="prose"><Content /></div>
 
-    <div class="hr"></div>
+    {post.data.sources.length > 0 && (
+      <section class="sources" aria-labelledby="sources-heading">
+        <h2 id="sources-heading">Sources and evidence</h2>
+        <ol>{post.data.sources.map((source) => <li><a href={source.url} rel="noopener noreferrer">{source.title}</a></li>)}</ol>
+      </section>
+    )}
 
     <section class="readnext">
-      <h2 style="margin:18px 0 6px 0;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)">
-        Read next
-      </h2>
-      {others.map((p) => (
-        <a class="item" href={`/p/${p.slug}`}>
+      <h2>Read next</h2>
+      {others.map((entry) => (
+        <a class="item" href={`/p/${entry.slug}`}>
           <div class="itemInner">
-            <div class="meta">
-              <span class="badge">{p.data.category}</span>
-              <span class="dot">•</span>
-              <span>{p.data.publishDate}</span>
-            </div>
-            <h3>{p.data.title}</h3>
-            <p>{p.data.deck}</p>
+            <div class="meta"><span class="badge">{entry.data.category}</span><span>{entry.data.publishDate}</span></div>
+            <h3>{entry.data.title}</h3><p>{entry.data.deck}</p>
           </div>
         </a>
       ))}
     </section>
   </article>
 
-  <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <script>
-    // Robust fallback chain: webp -> png -> jpg -> category -> default
-    (function () {
-      const img = document.getElementById("postHero");
-      if (!img) return;
-
-      let srcs = [];
-      try {
-        srcs = JSON.parse(img.getAttribute("data-srcs") || "[]");
-      } catch (_) {
-        srcs = [];
-      }
-
-      let idx = 0;
-      img.addEventListener("error", () => {
-        idx += 1;
-        if (idx < srcs.length) {
-          img.src = srcs[idx];
-        }
+    const image = document.getElementById("postHero");
+    if (image instanceof HTMLImageElement) {
+      const sources = JSON.parse(image.dataset.srcs || "[]");
+      let index = 0;
+      image.addEventListener("error", () => {
+        index += 1;
+        if (index < sources.length) image.src = sources[index];
       });
-    })();
+    }
   </script>
 </BaseLayout>

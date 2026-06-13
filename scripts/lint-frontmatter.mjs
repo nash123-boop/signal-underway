@@ -1,27 +1,36 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import fs from "node:fs";
+import path from "node:path";
 
-const dir = path.resolve('src/content/posts');
-const files = fs.readdirSync(dir).filter(f => f.endsWith('.md'));
+const directory = path.resolve("src/content/posts");
+const files = fs.readdirSync(directory).filter((file) => file.endsWith(".md"));
+const required = ["title", "deck", "category", "publishDate"];
+let valid = true;
 
-let ok = true;
-
-for (const f of files) {
-  const p = path.join(dir, f);
-  const raw = fs.readFileSync(p, 'utf-8');
-  const m = raw.match(/^---\n([\s\S]*?)\n---/);
-  if (!m) {
-    console.error(`❌ Missing frontmatter: ${f}`);
-    ok = false;
+for (const file of files) {
+  const raw = fs.readFileSync(path.join(directory, file), "utf8").replace(/^\uFEFF/, "");
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  if (!match) {
+    console.error(`ERROR ${file}: malformed or missing frontmatter`);
+    valid = false;
     continue;
   }
-  const fm = m[1];
-  const required = ['title:', 'deck:', 'category:', 'publishDate:'];
-  for (const r of required) {
-    if (!fm.includes(r)) {
-      console.error(`❌ ${f} missing "${r}"`);
-      ok = false;
+  const frontmatter = match[1];
+  const body = match[2].trim();
+  for (const field of required) {
+    if (!new RegExp(`^${field}:`, "m").test(frontmatter)) {
+      console.error(`ERROR ${file}: missing ${field}`);
+      valid = false;
     }
   }
+  if (body.split(/\s+/).filter(Boolean).length < 80) {
+    console.error(`ERROR ${file}: article body must contain at least 80 words`);
+    valid = false;
+  }
+  if (/yourdomain|\.\.\.|TBD|TODO/i.test(raw)) {
+    console.error(`ERROR ${file}: contains placeholder content`);
+    valid = false;
+  }
 }
-process.exit(ok ? 0 : 1);
+
+if (!valid) process.exit(1);
+console.log(`Validated ${files.length} articles.`);

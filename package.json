@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "node ./scripts/lint-frontmatter.mjs"
+    "lint": "node ./scripts/lint-frontmatter.mjs",
+    "check": "npm run lint && astro build",
+    "new:post": "node ./scripts/new-post.mjs"
   },
   "dependencies": {
     "astro": "^4.16.0"

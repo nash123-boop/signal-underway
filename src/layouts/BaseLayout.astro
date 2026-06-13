@@ -6,9 +6,14 @@ const {
   description = "Tracking patterns shaping what comes next.",
   ogImage = "/og-default.png",
   currentNav = "Latest",
+  canonical,
+  noIndex = false,
 } = Astro.props;
 
 const year = new Date().getFullYear();
+const site = Astro.site ?? new URL("https://signal-underway.pages.dev");
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site).toString();
+const absoluteOgImage = new URL(ogImage, site).toString();
 ---
 
 <!doctype html>
@@ -19,10 +24,19 @@ const year = new Date().getFullYear();
     <title>{title}</title>
 
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title="The National Signal RSS" href="/rss.xml" />
+    {noIndex && <meta name="robots" content="noindex,follow" />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The National Signal" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
   </head>
 
   <body>

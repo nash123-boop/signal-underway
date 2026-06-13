@@ -14,11 +14,8 @@ const CATEGORY_MAP: Record<string, string> = {
 };
 
 export function coverFor(post: any): string {
-  const slug = post?.slug;
-
-  if (slug) {
-    return `/posts/${slug}.png`;  // now uses PNG
-  }
+  const explicit = String(post?.data?.cover || "").trim();
+  if (explicit) return explicit;
 
   const category = NORMALIZE(post?.data?.category || "default");
   return CATEGORY_MAP[category] ?? CATEGORY_MAP.default;

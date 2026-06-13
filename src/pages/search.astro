@@ -2,37 +2,45 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-const q = (Astro.url.searchParams.get("q") ?? "").trim().toLowerCase();
 const posts = (await getCollection("posts"))
-  .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
-
-const hits = q
-  ? posts.filter(p =>
-      p.data.title.toLowerCase().includes(q) ||
-      p.data.deck.toLowerCase().includes(q) ||
-      p.data.category.toLowerCase().includes(q) ||
-      (p.data.tags ?? []).some(t => t.toLowerCase().includes(q))
-    )
-  : [];
+  .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate))
+  .map((post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    deck: post.data.deck,
+    category: post.data.category,
+    publishDate: post.data.publishDate,
+    tags: post.data.tags,
+  }));
 ---
-<BaseLayout title={`Search — ${q || "Signal Underway"}`} noIndex={true}>
-  <h2 style="margin:14px 0 8px 0;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-size:13px">Search</h2>
-  {q ? (
-    <p style="color:var(--muted);margin-top:0">Results for <strong>{q}</strong> ({hits.length})</p>
-  ) : (
-    <p style="color:var(--muted);margin-top:0">Type a query in the top bar search (press <strong>/</strong>).</p>
-  )}
-  <div class="list" style="margin-top:10px">
-    {hits.map((p) => (
-      <a class="item" href={`/p/${p.slug}`}>
-        <div class="itemInner">
-          <div class="meta">
-            <span class="badge">{p.data.category}</span><span class="dot">•</span><span>{p.data.publishDate}</span>
+
+<BaseLayout title="Search - The National Signal" noIndex={true}>
+  <section class="searchPage">
+    <p class="eyebrow">Archive search</p>
+    <h1>Search the signals</h1>
+    <p id="searchSummary" class="sub">Enter a topic, category, or phrase in the search bar.</p>
+    <div id="searchResults" class="list" aria-live="polite"></div>
+  </section>
+
+  <script type="application/json" id="searchIndex" set:html={JSON.stringify(posts)} />
+  <script>
+    const indexNode = document.getElementById("searchIndex");
+    const resultsNode = document.getElementById("searchResults");
+    const summaryNode = document.getElementById("searchSummary");
+    const query = new URLSearchParams(window.location.search).get("q")?.trim() || "";
+    const posts = JSON.parse(indexNode?.textContent || "[]");
+    const normalized = query.toLowerCase();
+    const hits = normalized ? posts.filter((post) => [post.title, post.deck, post.category, ...post.tags].join(" ").toLowerCase().includes(normalized)) : [];
+
+    if (summaryNode) summaryNode.textContent = query ? `${hits.length} result${hits.length === 1 ? "" : "s"} for "${query}"` : "Enter a topic, category, or phrase in the search bar.";
+    if (resultsNode && query) {
+      resultsNode.innerHTML = hits.length ? hits.map((post) => `
+        <a class="item" href="/p/${post.slug}">
+          <div class="itemInner">
+            <div class="meta"><span class="badge">${post.category}</span><span>${post.publishDate}</span></div>
+            <h3>${post.title}</h3><p>${post.deck}</p>
           </div>
-          <h3>{p.data.title}</h3>
-          <p>{p.data.deck}</p>
-        </div>
-      </a>
-    ))}
-  </div>
+        </a>`).join("") : `<p class="emptyState">No matching signals yet. Try a broader term.</p>`;
+    }
+  </script>
 </BaseLayout>

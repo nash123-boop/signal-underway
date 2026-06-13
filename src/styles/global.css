@@ -17,6 +17,7 @@ html,body{ padding:0; margin:0; background:var(--bg); color:var(--text); }
 body{ font-family:var(--sans); line-height:1.55; }
 a{ color:inherit; text-decoration:none; }
 a:hover{ text-decoration:underline; text-underline-offset:3px; }
+img{ max-width:100%; }
 
 .container{ max-width:var(--max); margin:0 auto; padding:0 18px; }
 .page{ padding:18px 0 42px; }
@@ -377,4 +378,35 @@ a:hover{ text-decoration:underline; text-underline-offset:3px; }
   display:flex;
   gap:14px;
   flex-wrap:wrap;
+}
+
+/* Article reading experience */
+.article{ max-width:780px; margin:0 auto; padding:24px 0 44px; }
+.article h1{ font-family:var(--serif); font-size:clamp(38px,7vw,62px); line-height:1.02; margin:14px 0 12px; letter-spacing:-.025em; }
+.article .sub{ color:var(--muted); font-size:19px; line-height:1.5; margin:0; max-width:65ch; }
+.pillrow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.pill{ border:1px solid var(--line); border-radius:999px; background:var(--soft); padding:5px 10px; font-size:12px; }
+.article .heroImage{ margin:22px 0 0; }
+.article .heroImage img{ height:min(52vw,430px); min-height:260px; }
+.articleMeta{ margin:14px 0 0; }
+.analysisNote{ border-left:3px solid var(--text); background:var(--soft); padding:12px 14px; margin:22px 0; color:var(--muted); font-size:14px; }
+.prose{ font-family:var(--serif); font-size:19px; line-height:1.75; }
+.prose h2{ font-size:30px; line-height:1.2; margin:38px 0 12px; }
+.prose h3{ font-size:23px; margin:30px 0 10px; }
+.prose p{ margin:0 0 20px; }
+.prose li{ margin:7px 0; }
+.prose a,.sources a{ text-decoration:underline; text-underline-offset:3px; }
+.sources{ border-top:1px solid var(--line); margin-top:34px; padding-top:22px; }
+.sources h2,.readnext h2{ font-family:var(--sans); font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.readnext{ border-top:1px solid var(--line); margin-top:34px; padding-top:16px; }
+.searchPage{ max-width:900px; margin:0 auto; padding:28px 0 48px; }
+.searchPage h1{ font-family:var(--serif); font-size:44px; margin:4px 0 8px; }
+.eyebrow{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+.emptyState{ padding:24px; background:var(--soft); border-radius:var(--radius); color:var(--muted); }
+
+@media (max-width:720px){
+  .article{ padding-top:16px; }
+  .article .sub{ font-size:17px; }
+  .prose{ font-size:18px; }
+  .prose h2{ font-size:26px; }
 }
