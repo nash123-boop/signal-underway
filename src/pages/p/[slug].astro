@@ -78,6 +78,11 @@ const jsonLd = {
       <span>{readingMinutes} min read</span>
     </div>
 
+    <div class="articleActions">
+      <button class="shareButton" id="shareArticle" type="button">Share article</button>
+      <span id="shareStatus" class="shareStatus" aria-live="polite"></span>
+    </div>
+
     <p class="analysisNote"><strong>Signal analysis:</strong> This article identifies observable patterns and separates evidence from possible implications. It is not a claim of certainty.</p>
 
     <div class="prose"><Content /></div>
@@ -113,5 +118,22 @@ const jsonLd = {
         if (index < sources.length) image.src = sources[index];
       });
     }
+
+    const shareButton = document.getElementById("shareArticle");
+    const shareStatus = document.getElementById("shareStatus");
+    shareButton?.addEventListener("click", async () => {
+      try {
+        if (navigator.share) {
+          await navigator.share({ title: document.title, url: window.location.href });
+        } else {
+          await navigator.clipboard.writeText(window.location.href);
+          if (shareStatus) shareStatus.textContent = "Link copied";
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name !== "AbortError" && shareStatus) {
+          shareStatus.textContent = "Copy the address from your browser";
+        }
+      }
+    });
   </script>
 </BaseLayout>

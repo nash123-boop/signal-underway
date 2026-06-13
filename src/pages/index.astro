@@ -101,9 +101,26 @@ const latest = posts.slice(1, 9);
     @media (max-width: 860px){
       .hero{grid-template-columns:1fr}
       .heroTitle{font-size:36px}
-      .heroMedia{min-height:220px}
-      .item{grid-template-columns:1fr}
-      .thumb{height:200px}
+      .heroMedia{min-height:0;aspect-ratio:16/9}
+      .item{grid-template-columns:1fr 112px;align-items:start}
+      .thumb{width:112px;height:82px}
+    }
+    @media (max-width: 560px){
+      .home{padding:4px 0 32px}
+      .hero{gap:16px;padding:12px 0 20px}
+      .kickers{gap:6px;margin-bottom:8px;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+      .kickers::-webkit-scrollbar{display:none}
+      .k{white-space:nowrap;padding:5px 9px}
+      .heroTitle{font-size:clamp(34px,10vw,42px);letter-spacing:-.02em}
+      .heroDeck{font-size:16px;line-height:1.5}
+      .heroActions{display:grid;grid-template-columns:1fr 1fr}
+      .btn{width:100%}
+      .feedHeader{margin-top:20px}
+      .list{gap:0}
+      .item{grid-template-columns:1fr 96px;gap:12px;padding:16px 0;border-width:1px 0 0;border-radius:0}
+      .itemInner h3{font-size:19px}
+      .itemInner p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .thumb{width:96px;height:76px;border-radius:9px}
     }
   </style>
 </BaseLayout>

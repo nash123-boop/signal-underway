@@ -21,8 +21,8 @@ const absoluteOgImage = new URL(ogImage, site).toString();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>
-
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" type="application/rss+xml" title="The National Signal RSS" href="/rss.xml" />
@@ -42,17 +42,17 @@ const absoluteOgImage = new URL(ogImage, site).toString();
   <body>
     <header class="siteHeader">
       <div class="container headerInner">
-        <a class="brand" href="/" aria-label="Home">
+        <a class="brand" href="/" aria-label="The National Signal home">
           <div class="brandMark" aria-hidden="true"></div>
           <div class="brandText">
             <div class="brandName">The National Signal</div>
-            <div class="brandTag">{description}</div>
+            <div class="brandTag">Tracking patterns shaping what comes next.</div>
           </div>
         </a>
 
         <form class="search" action="/search" method="get">
           <label class="srOnly" for="q">Search signals</label>
-          <input id="q" name="q" type="search" placeholder="Search signals…" />
+          <input id="q" name="q" type="search" placeholder="Search signals..." />
           <kbd class="kbd" aria-hidden="true">/</kbd>
         </form>
 
@@ -67,13 +67,11 @@ const absoluteOgImage = new URL(ogImage, site).toString();
       </div>
     </header>
 
-    <main class="container page">
-      <slot />
-    </main>
+    <main class="container page"><slot /></main>
 
     <footer class="siteFooter">
       <div class="container footerInner">
-        <div>© {year} The National Signal</div>
+        <div>&copy; {year} The National Signal</div>
         <div class="footerLinks">
           <a href="/about">About</a>
           <a href="/method">Method</a>
