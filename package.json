@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "lint": "node ./scripts/lint-frontmatter.mjs",
-    "check": "npm run lint && astro build",
+    "check:links": "node ./scripts/check-links.mjs",
+    "check": "npm run lint && npm run check:links && astro build",
     "new:post": "node ./scripts/new-post.mjs"
   },
   "dependencies": {

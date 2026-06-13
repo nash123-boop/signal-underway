@@ -80,5 +80,15 @@ const absoluteOgImage = new URL(ogImage, site).toString();
         </div>
       </div>
     </footer>
+
+    <script>
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey) return;
+        const target = event.target;
+        if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) return;
+        event.preventDefault();
+        document.getElementById("q")?.focus();
+      });
+    </script>
   </body>
 </html>

@@ -98,8 +98,18 @@ const banner = categoryBanner(canonicalCat);
     @media (max-width: 860px){
       .mast{grid-template-columns:1fr}
       .mastText h1{font-size:34px}
-      .row{grid-template-columns:1fr}
-      .thumb{height:210px}
+      .mastMedia{min-height:0;aspect-ratio:16/9}
+      .row{grid-template-columns:1fr 112px;align-items:start}
+      .thumb{width:112px;height:82px}
+    }
+    @media (max-width: 560px){
+      .page{padding:8px 0 32px}
+      .mast{gap:14px;padding-bottom:16px}
+      .list{gap:0}
+      .row{grid-template-columns:1fr 96px;gap:12px;padding:16px 0;border-width:0 0 1px;border-radius:0}
+      .rowText h2{font-size:19px}
+      .rowText p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .thumb{width:96px;height:76px;border-radius:9px}
     }
   </style>
 </BaseLayout>
