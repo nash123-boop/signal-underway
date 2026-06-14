@@ -4,8 +4,9 @@
   --muted:#555555;
   --line:#e6e6e6;
   --soft:#f7f7f7;
-  --accent:#b83a2d;
-  --accent-soft:#f7ebe8;
+  --accent:#405866;
+  --accent-soft:#eef2f3;
+  --paper:#f8f7f4;
 
   --radius:12px;
   --max:1440px;
@@ -41,7 +42,7 @@ img{ max-width:100%; }
   position:sticky;
   top:0;
   z-index:10;
-  background:var(--bg);
+  background:rgba(248,247,244,.98);
   border-bottom:1px solid var(--line);
 }
 
@@ -62,12 +63,9 @@ img{ max-width:100%; }
 .brandMark{
   width:26px;
   height:26px;
-  position:relative;
   flex:0 0 auto;
-  background:var(--accent);
-  clip-path:polygon(0 0,100% 0,62% 100%,0 100%);
+  object-fit:contain;
 }
-.brandMark::after{ content:""; position:absolute; top:0; right:4px; width:4px; height:100%; background:#fff; transform:skewX(-20deg); }
 
 .brandText{ display:flex; flex-direction:column; }
 .brandName{
@@ -77,7 +75,6 @@ img{ max-width:100%; }
   font-size:18px;
   line-height:1.1;
 }
-.brandName strong{ color:var(--accent); font-weight:900; }
 .brandTag{
   font-size:12px;
   color:var(--muted);
@@ -154,7 +151,7 @@ img{ max-width:100%; }
   .siteHeader{ position:relative; }
   .headerInner{ display:grid; grid-template-columns:auto minmax(130px,1fr); gap:8px 12px; padding:9px 0 0; }
   .brand{ min-width:0; gap:9px; }
-  .brandMark{ width:24px; height:24px; border-radius:7px; flex:0 0 auto; }
+  .brandMark{ width:28px; height:28px; flex:0 0 auto; }
   .brandName{ font-size:17px; }
   .brandTag{ display:none; }
   .search{ width:100%; max-width:none; padding:7px 10px; }
@@ -594,9 +591,7 @@ img{ max-width:100%; }
   .headerInner{ display:grid; grid-template-columns:minmax(430px,1fr) minmax(220px,.6fr) minmax(240px,.55fr); grid-template-rows:auto auto; gap:10px 32px; padding:16px 0 0; }
   .brand{ grid-column:1; grid-row:1; justify-self:start; min-width:0; text-align:left; gap:14px; }
   .brandMark{ width:42px; height:50px; }
-  .brandName{ display:flex; align-items:baseline; gap:10px; font-size:clamp(31px,2.8vw,43px); line-height:.92; }
-  .brandName strong{ position:relative; }
-  .brandName strong::after{ content:""; position:absolute; left:2px; right:-5px; bottom:-8px; height:3px; background:var(--accent); transform:skewX(-24deg); }
+  .brandName{ font-size:clamp(31px,2.8vw,43px); line-height:.92; }
   .brandTag{ margin-top:8px; font-size:10px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; }
   .search{ grid-column:2; grid-row:1; justify-self:stretch; align-self:center; width:100%; max-width:none; border-radius:0; border-width:0 0 1px; padding:7px 2px; }
   .headerMeta{ grid-column:3; grid-row:1; align-self:center; justify-self:end; display:flex; flex-direction:column; gap:3px; color:var(--muted); font-family:var(--sans); font-size:12px; text-align:right; }

@@ -27,7 +27,8 @@ const absoluteOgImage = new URL(ogImage, site).toString();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#f8f7f4" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
@@ -54,9 +55,9 @@ const absoluteOgImage = new URL(ogImage, site).toString();
         </div>
 
         <a class="brand" href="/" aria-label="The National Angle home">
-          <div class="brandMark" aria-hidden="true"></div>
+          <img class="brandMark" src="/angle-mark.svg" alt="" width="58" height="58" />
           <div class="brandText">
-            <div class="brandName"><span>The National</span><strong>Angle</strong></div>
+            <div class="brandName">The National Angle</div>
             <div class="brandTag">Tracking patterns shaping what comes next.</div>
           </div>
         </a>
