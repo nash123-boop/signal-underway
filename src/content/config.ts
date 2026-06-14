@@ -8,6 +8,7 @@ const posts = defineCollection({
     category: z.enum(["World", "Politics", "Business", "Technology", "Culture"]),
     cover: z.string().optional(),
     publishDate: z.string(), // YYYY-MM-DD
+    publishTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).optional(), // HH:mm
     updatedDate: z.string().optional(),
     author: z.string().default("The National Angle Desk"),
     tags: z.array(z.string()).default([]),

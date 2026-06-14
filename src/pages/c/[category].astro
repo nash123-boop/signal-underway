@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { categories } from "../../lib/categories";
 import { categoryBanner, coverFor } from "../../lib/covers";
+import { belongsToSection, sortPostsNewest } from "../../lib/posts";
 
 export async function getStaticPaths() {
   return categories.map((category) => ({ params: { category: category.toLowerCase() } }));
@@ -10,8 +11,8 @@ export async function getStaticPaths() {
 
 const cat = (Astro.params.category ?? "").toLowerCase();
 const canonicalCat = categories.find((category) => category.toLowerCase() === cat);
-if (!canonicalCat) return Astro.redirect("/latest");
-const posts = (await getCollection("posts")).filter((post) => post.data.category.toLowerCase() === cat).sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
+if (!canonicalCat) return Astro.redirect("/");
+const posts = sortPostsNewest((await getCollection("posts")).filter((post) => belongsToSection(post, canonicalCat)));
 ---
 
 <BaseLayout title={`${canonicalCat} - The National Angle`} currentNav={canonicalCat}>

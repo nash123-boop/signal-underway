@@ -3,8 +3,9 @@ title: "The Trillion-Dollar Premium: What SpaceX's IPO Says About Modern Markets
 deck: "SpaceX's record debut shows how aggressively investors will price future dominance before the underlying economics have caught up."
 category: "Business"
 publishDate: "2026-06-14"
+publishTime: "10:08"
 author: "The National Angle Desk"
-tags: ["SpaceX", "Elon Musk", "Markets", "Artificial Intelligence"]
+tags: ["SpaceX", "Elon Musk", "Markets", "Artificial Intelligence", "Technology"]
 cover: "/posts/spacex-trillion-dollar-premium.webp"
 sources:
   - title: "SpaceX Makes Largest-Ever Stock Market Debut, Making Elon Musk World's First Trillionaire"

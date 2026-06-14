@@ -1,9 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { sortPostsNewest } from "../lib/posts";
 
-const posts = (await getCollection("posts"))
-  .sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate))
+const posts = sortPostsNewest(await getCollection("posts"))
   .map((post) => ({
     slug: post.slug,
     title: post.data.title,

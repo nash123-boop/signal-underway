@@ -3,8 +3,9 @@ title: "The Geopolitical 6-7 6-7: Why the US-Iran Peace Deal Keeps Moving Forwar
 deck: "The viral gesture has become an unlikely metaphor for peace talks that repeatedly advance, retreat, and return to the same unresolved terms."
 category: "Politics"
 publishDate: "2026-06-14"
+publishTime: "11:24"
 author: "The National Angle Desk"
-tags: ["US-Iran Relations", "Strait of Hormuz", "Diplomacy", "Foreign Policy"]
+tags: ["US-Iran Relations", "Strait of Hormuz", "Diplomacy", "Foreign Policy", "World"]
 cover: "/posts/us-iran-geopolitical-6-7.webp"
 sources:
   - title: "What to Know About a Possible Deal to End the Iran War"

@@ -2,13 +2,14 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { coverFor } from "../lib/covers";
+import { sortPostsNewest } from "../lib/posts";
 
-const posts = (await getCollection("posts")).sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
+const posts = sortPostsNewest(await getCollection("posts"));
 const hero = posts[0];
 const latest = posts.slice(1, 9);
 ---
 
-<BaseLayout title="The National Angle" currentNav="Latest">
+<BaseLayout title="The National Angle" currentNav="Main">
   <div class="publicationPage homePage">
     {hero && (
       <section class="leadStory">
