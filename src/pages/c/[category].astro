@@ -68,10 +68,13 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
             <div class="sectionHeadlineRail">
               {headlineRail.map((post) => (
                 <a class="sectionRailStory" href={`/p/${post.slug}`}>
-                  <div class="storyLabel">{categoryLabel(post.data.category)}</div>
-                  <h2>{post.data.title}</h2>
-                  <p>{post.data.deck}</p>
-                  <div class="storyTime">{readingMinutes(post.body)} min read</div>
+                  <div class="sectionRailMedia"><img src={coverFor(post)} alt="" loading="lazy" onerror="this.onerror=null;this.src='/covers/default.webp';" /></div>
+                  <div class="sectionRailText">
+                    <div class="storyLabel">{categoryLabel(post.data.category)}</div>
+                    <h2>{post.data.title}</h2>
+                    <p>{post.data.deck}</p>
+                    <div class="storyTime">{readingMinutes(post.body)} min read</div>
+                  </div>
                 </a>
               ))}
             </div>
