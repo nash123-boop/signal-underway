@@ -1,10 +1,11 @@
 ---
-title: "The Geopolitical 6-7: Why the US-Iran Peace Deal Keeps Moving Forward and Back"
+title: "The Geopolitical 6-7 6-7: Why the US-Iran Peace Deal Keeps Moving Forward and Back"
 deck: "The viral gesture has become an unlikely metaphor for peace talks that repeatedly advance, retreat, and return to the same unresolved terms."
 category: "Politics"
 publishDate: "2026-06-14"
 author: "The National Angle Desk"
 tags: ["US-Iran Relations", "Strait of Hormuz", "Diplomacy", "Foreign Policy"]
+cover: "/posts/us-iran-geopolitical-6-7.webp"
 sources:
   - title: "What to Know About a Possible Deal to End the Iran War"
     url: "https://apnews.com/article/iran-war-us-pakistan-ceasefire-what-to-know-949710df39e3f1033cbb6beda3955814"
