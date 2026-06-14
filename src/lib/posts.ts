@@ -14,3 +14,7 @@ export function belongsToSection(
   return post.data.category.toLowerCase() === normalizedSection
     || post.data.tags.some((tag) => tag.trim().toLowerCase() === normalizedSection);
 }
+
+export function selectLeadPost<T extends { data: { featured?: boolean } }>(posts: T[]): T | undefined {
+  return posts.find((post) => post.data.featured) ?? posts[0];
+}

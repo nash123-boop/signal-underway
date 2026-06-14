@@ -32,6 +32,7 @@ ARTICLE STRUCTURE
 - Start with frontmatter using exactly these fields:
   title, deck, category, publishDate, publishTime, author, tags, sources, featured, and optional cover.
 - Use one primary category. Add the exact name of another top section to tags only when the article genuinely belongs in both sections.
+- Set featured to true only when the article should remain the lead story in its relevant sections. Otherwise use false and the newest article will lead.
 - The deck must be one clear sentence in sentence case, normally 12 to 24 words.
 - After frontmatter, begin directly with a short opening paragraph containing the most consequential verified fact or development.
 - Do not add labels such as "Opening Signal," "Opening Angle," "Signal Analysis," or "Angle Analysis."

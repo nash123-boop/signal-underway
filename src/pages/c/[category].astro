@@ -2,8 +2,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { categories } from "../../lib/categories";
-import { categoryBanner, coverFor } from "../../lib/covers";
-import { belongsToSection, sortPostsNewest } from "../../lib/posts";
+import { coverFor } from "../../lib/covers";
+import { belongsToSection, selectLeadPost, sortPostsNewest } from "../../lib/posts";
 
 export async function getStaticPaths() {
   return categories.map((category) => ({ params: { category: category.toLowerCase() } }));
@@ -13,23 +13,40 @@ const cat = (Astro.params.category ?? "").toLowerCase();
 const canonicalCat = categories.find((category) => category.toLowerCase() === cat);
 if (!canonicalCat) return Astro.redirect("/");
 const posts = sortPostsNewest((await getCollection("posts")).filter((post) => belongsToSection(post, canonicalCat)));
+const lead = selectLeadPost(posts);
+const remaining = lead ? posts.filter((post) => post.id !== lead.id) : [];
 ---
 
 <BaseLayout title={`${canonicalCat} - The National Angle`} currentNav={canonicalCat}>
   <div class="publicationPage">
-    <header class="archiveHero">
-      <div><div class="signalPills"><span>{canonicalCat}</span><span>Archive</span></div><h1>{canonicalCat}</h1><p class="pageDeck">Reporting and analysis focused on consequential changes in {canonicalCat.toLowerCase()}.</p></div>
-      <div class="archiveMedia"><img src={categoryBanner(canonicalCat)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" /></div>
-    </header>
-    {posts.length === 0 ? <p class="emptyState">No published stories in this category yet.</p> : (
-      <section class="storyList archiveList">
-        {posts.map((post) => (
-          <a class="storyCard" href={`/p/${post.slug}`}>
-            <div class="storyCardText"><div class="meta"><span class="badge">{post.data.category}</span><span class="dot">&bull;</span><time datetime={post.data.publishDate}>{post.data.publishDate}</time></div><h3>{post.data.title}</h3><p>{post.data.deck}</p></div>
-            <div class="storyThumb"><img src={coverFor(post)} alt="" loading="lazy" onerror="this.onerror=null;this.src='/covers/default.webp';" /></div>
+    {!lead ? <p class="emptyState">No published stories in this section yet.</p> : (
+      <>
+        <section class="leadStory sectionLeadStory">
+          <div class="leadStoryText">
+            <div class="signalPills"><span>{canonicalCat}</span><span>{lead.data.featured ? "Top story" : "Latest"}</span></div>
+            <h1>{lead.data.title}</h1>
+            <p class="pageDeck">{lead.data.deck}</p>
+            <div class="pageActions"><a class="btn primary" href={`/p/${lead.slug}`}>Read the article</a></div>
+          </div>
+          <a class="leadStoryMedia" href={`/p/${lead.slug}`} aria-label={`Read ${lead.data.title}`}>
+            <img src={coverFor(lead)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />
           </a>
-        ))}
-      </section>
+        </section>
+
+        {remaining.length > 0 && (
+          <section class="storyFeed">
+            <h2 class="sectionLabel">More in {canonicalCat}</h2>
+            <div class="storyList archiveList">
+              {remaining.map((post) => (
+                <a class="storyCard" href={`/p/${post.slug}`}>
+                  <div class="storyCardText"><div class="meta"><span class="badge">{post.data.category}</span><span class="dot">&bull;</span><time datetime={post.data.publishDate}>{post.data.publishDate}</time></div><h3>{post.data.title}</h3><p>{post.data.deck}</p></div>
+                  <div class="storyThumb"><img src={coverFor(post)} alt="" loading="lazy" onerror="this.onerror=null;this.src='/covers/default.webp';" /></div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </>
     )}
   </div>
 </BaseLayout>
