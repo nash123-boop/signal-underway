@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { categories } from "../../lib/categories";
+import { categories, categoryLabel } from "../../lib/categories";
 import { coverFor } from "../../lib/covers";
 import { belongsToSection, selectLeadPost, sortPostsNewest } from "../../lib/posts";
 
@@ -26,21 +26,22 @@ const sectionTopics: Record<string, string[]> = {
   Culture: ["Ideas", "Media", "Sport", "History"],
 };
 const topics = sectionTopics[canonicalCat] ?? [];
+const displayCategory = categoryLabel(canonicalCat);
 const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split(/\s+/).filter(Boolean).length / 220));
 ---
 
-<BaseLayout title={`${canonicalCat} - The National Angle`} currentNav={canonicalCat}>
+<BaseLayout title={`${displayCategory} - The National Angle`} currentNav={canonicalCat}>
   <div class="publicationPage sectionPage">
     <header class="sectionMasthead">
-      <h1>{canonicalCat}</h1>
-      <nav aria-label={`${canonicalCat} topics`}>
+      <h1>{displayCategory}</h1>
+      <nav aria-label={`${displayCategory} topics`}>
         {topics.map((topic) => <a href={`/search?q=${encodeURIComponent(topic)}`}>{topic}</a>)}
       </nav>
     </header>
 
     {!lead ? <p class="emptyState">No published stories in this section yet.</p> : (
       <>
-        <section class={`sectionNewsGrid ${!secondary ? "singleStory" : headlineRail.length === 0 ? "twoStory" : ""}`} aria-label={`Top ${canonicalCat} stories`}>
+        <section class={`sectionNewsGrid ${!secondary ? "singleStory" : headlineRail.length === 0 ? "twoStory" : ""}`} aria-label={`Top ${displayCategory} stories`}>
           <article class="sectionPrimaryStory">
             <a class="sectionPrimaryMedia" href={`/p/${lead.slug}`} aria-label={`Read ${lead.data.title}`}>
               <img src={coverFor(lead)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />
@@ -56,7 +57,7 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
               <a class="sectionSecondaryMedia" href={`/p/${secondary.slug}`} aria-label={`Read ${secondary.data.title}`}>
                 <img src={coverFor(secondary)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />
               </a>
-              <div class="storyLabel">{secondary.data.category}</div>
+              <div class="storyLabel">{categoryLabel(secondary.data.category)}</div>
               <h2><a href={`/p/${secondary.slug}`}>{secondary.data.title}</a></h2>
               <p>{secondary.data.deck}</p>
               <div class="storyTime">{readingMinutes(secondary.body)} min read</div>
@@ -67,7 +68,7 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
             <div class="sectionHeadlineRail">
               {headlineRail.map((post) => (
                 <a class="sectionRailStory" href={`/p/${post.slug}`}>
-                  <div class="storyLabel">{post.data.category}</div>
+                  <div class="storyLabel">{categoryLabel(post.data.category)}</div>
                   <h2>{post.data.title}</h2>
                   <p>{post.data.deck}</p>
                   <div class="storyTime">{readingMinutes(post.body)} min read</div>
@@ -79,11 +80,11 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
 
         {moreStories.length > 0 && (
           <section class="storyFeed">
-            <div class="sectionHeading"><h2>More in {canonicalCat}</h2></div>
+            <div class="sectionHeading"><h2>More in {displayCategory}</h2></div>
             <div class="storyList archiveList">
               {moreStories.map((post) => (
                 <a class="storyCard" href={`/p/${post.slug}`}>
-                  <div class="storyCardText"><div class="meta"><span class="storyLabel">{post.data.category}</span><span class="dot">&bull;</span><span>{readingMinutes(post.body)} min read</span></div><h3>{post.data.title}</h3><p>{post.data.deck}</p></div>
+                  <div class="storyCardText"><div class="meta"><span class="storyLabel">{categoryLabel(post.data.category)}</span><span class="dot">&bull;</span><span>{readingMinutes(post.body)} min read</span></div><h3>{post.data.title}</h3><p>{post.data.deck}</p></div>
                   <div class="storyThumb"><img src={coverFor(post)} alt="" loading="lazy" onerror="this.onerror=null;this.src='/covers/default.webp';" /></div>
                 </a>
               ))}

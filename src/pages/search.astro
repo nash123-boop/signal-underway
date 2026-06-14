@@ -2,13 +2,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { sortPostsNewest } from "../lib/posts";
+import { categoryLabel } from "../lib/categories";
 
 const posts = sortPostsNewest(await getCollection("posts"))
   .map((post) => ({
     slug: post.slug,
     title: post.data.title,
     deck: post.data.deck,
-    category: post.data.category,
+    category: categoryLabel(post.data.category),
+    categoryKey: post.data.category,
     publishDate: post.data.publishDate,
     tags: post.data.tags,
   }));
@@ -30,7 +32,7 @@ const posts = sortPostsNewest(await getCollection("posts"))
     const query = new URLSearchParams(window.location.search).get("q")?.trim() || "";
     const posts = JSON.parse(indexNode?.textContent || "[]");
     const normalized = query.toLowerCase();
-    const hits = normalized ? posts.filter((post) => [post.title, post.deck, post.category, ...post.tags].join(" ").toLowerCase().includes(normalized)) : [];
+    const hits = normalized ? posts.filter((post) => [post.title, post.deck, post.category, post.categoryKey, ...post.tags].join(" ").toLowerCase().includes(normalized)) : [];
 
     if (summaryNode) summaryNode.textContent = query ? `${hits.length} result${hits.length === 1 ? "" : "s"} for "${query}"` : "Enter a topic, category, or phrase in the search bar.";
     if (resultsNode && query) {

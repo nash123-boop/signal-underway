@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { coverFor } from "../lib/covers";
 import { sortPostsNewest } from "../lib/posts";
+import { categoryLabel } from "../lib/categories";
 
 const posts = sortPostsNewest(await getCollection("posts"));
 const hero = posts[0];
@@ -20,7 +21,7 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
         <div class="frontPageRail">
           {headlineRail.map((post, index) => (
             <a class="railStory" href={`/p/${post.slug}`}>
-              <div class="storyLabel">{index === 0 ? "Analysis" : post.data.category}</div>
+              <div class="storyLabel">{index === 0 ? "Analysis" : categoryLabel(post.data.category)}</div>
               <h2>{post.data.title}</h2>
               {index === 0 && <p>{post.data.deck}</p>}
               <div class="storyTime">{readingMinutes(post.body)} min read</div>
@@ -32,7 +33,7 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
           <a class="primaryStoryMedia" href={`/p/${hero.slug}`} aria-label={`Read ${hero.data.title}`}>
             <img src={coverFor(hero)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />
           </a>
-          <div class="storyLabel">{hero.data.category}</div>
+          <div class="storyLabel">{categoryLabel(hero.data.category)}</div>
           <h1><a href={`/p/${hero.slug}`}>{hero.data.title}</a></h1>
           <p>{hero.data.deck}</p>
           <div class="storyTime">{readingMinutes(hero.body)} min read</div>
@@ -43,7 +44,7 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
             <a class="secondaryStoryMedia" href={`/p/${secondary.slug}`} aria-label={`Read ${secondary.data.title}`}>
               <img src={coverFor(secondary)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />
             </a>
-            <div class="storyLabel">{secondary.data.category}</div>
+            <div class="storyLabel">{categoryLabel(secondary.data.category)}</div>
             <h2><a href={`/p/${secondary.slug}`}>{secondary.data.title}</a></h2>
             <p>{secondary.data.deck}</p>
             <div class="storyTime">{readingMinutes(secondary.body)} min read</div>
@@ -58,7 +59,7 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
         {latest.map((post) => (
           <a class="storyCard" href={`/p/${post.slug}`}>
             <div class="storyCardText">
-              <div class="meta"><span class="storyLabel">{post.data.category}</span><span class="dot">&bull;</span><span>{readingMinutes(post.body)} min read</span></div>
+              <div class="meta"><span class="storyLabel">{categoryLabel(post.data.category)}</span><span class="dot">&bull;</span><span>{readingMinutes(post.body)} min read</span></div>
               <h3>{post.data.title}</h3><p>{post.data.deck}</p>
             </div>
             <div class="storyThumb"><img src={coverFor(post)} alt="" loading="lazy" onerror="this.onerror=null;this.src='/covers/default.webp';" /></div>
