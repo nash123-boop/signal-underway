@@ -32,7 +32,8 @@ ARTICLE STRUCTURE
 - Start with frontmatter using exactly these fields:
   title, deck, category, publishDate, author, tags, sources, featured, and optional cover.
 - The deck must be one clear sentence in sentence case, normally 12 to 24 words.
-- After frontmatter, begin with a short opening paragraph. It may start with bold text such as **Opening signal:** when appropriate.
+- After frontmatter, begin directly with a short opening paragraph containing the most consequential verified fact or development.
+- Do not add labels such as "Opening Signal," "Opening Angle," "Signal Analysis," or "Angle Analysis."
 - Organize the article with descriptive ## headings in publication title case.
 - Use ### headings only when a section genuinely needs subsections.
 - Use bullets only when they make evidence or next steps easier to scan.

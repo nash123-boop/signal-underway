@@ -13,10 +13,10 @@ const latest = posts.slice(1, 9);
     {hero && (
       <section class="leadStory">
         <div class="leadStoryText">
-          <div class="signalPills"><span>Signals</span><span>Quiet Power</span><span>What Moves Next</span></div>
+          <div class="signalPills"><span>{hero.data.category}</span>{hero.data.tags.slice(0, 2).map((tag) => <span>{tag}</span>)}</div>
           <h1>{hero.data.title}</h1>
           <p class="pageDeck">{hero.data.deck}</p>
-          <div class="pageActions"><a class="btn primary" href={`/p/${hero.slug}`}>Read the signal</a><a class="btn" href="/latest">Browse latest</a></div>
+          <div class="pageActions"><a class="btn primary" href={`/p/${hero.slug}`}>Read the article</a><a class="btn" href="/latest">Browse latest</a></div>
         </div>
         <a class="leadStoryMedia" href={`/p/${hero.slug}`} aria-label={`Read ${hero.data.title}`}>
           <img src={coverFor(hero)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />

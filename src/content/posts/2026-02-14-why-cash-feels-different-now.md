@@ -1,6 +1,6 @@
 ---
 title: "Why Cash Feels Different Now"
-deck: "Small signals suggest money is changing shape again."
+deck: "Small changes suggest money is taking a different shape."
 category: "Business"
 publishDate: "2026-02-14"
 author: "The National Angle Desk"
@@ -9,7 +9,7 @@ featured: true
 cover: "/posts/why-cash-feels-different-now.png"
 ---
 
-**Opening signal:** Something subtle is happening around how cash moves.
+Something subtle is happening around how cash moves.
 
 ## The Traces
 
@@ -32,4 +32,4 @@ The distinction matters. Cash can remain legal while becoming progressively hard
 - Merchant infrastructure upgrades
 - Changes to withdrawal limits or cash-handling fees
 
-The signal becomes meaningful only when these changes repeat across institutions and regions.
+The pattern becomes meaningful only when these changes repeat across institutions and regions.

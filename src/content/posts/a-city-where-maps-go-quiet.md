@@ -1,14 +1,14 @@
 ---
 title: "A City Is Being Built Where Maps Go Quiet"
-deck: "Construction signals in one corridor don't align with population, commerce, or transit. That's the point."
+deck: "Construction activity in one corridor does not align with population, commerce, or transit. That is the point."
 category: "World"
 publishDate: "2026-01-29"
-tags: ["Infrastructure", "Signals", "Megaprojects"]
+tags: ["Infrastructure", "Development", "Megaprojects"]
 featured: true
 cover: "/posts/test.webp"
 ---
 
-**Opening signal:** The numbers don't match the story. If this were a normal city build-out, the permits, suppliers, and logistics would leave a loud trail.
+The numbers do not match the story. If this were a normal city build-out, the permits, suppliers, and logistics would leave a loud trail.
 
 But this one stays strangely quiet.
 

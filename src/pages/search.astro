@@ -17,7 +17,7 @@ const posts = (await getCollection("posts"))
 <BaseLayout title="Search - The National Angle" noIndex={true}>
   <section class="searchPage publicationPage">
     <div class="signalPills"><span>Archive</span><span>Search</span></div>
-    <h1>Search the signals</h1>
+    <h1>Search the archive</h1>
     <p id="searchSummary" class="pageDeck">Enter a topic, category, or phrase in the search bar.</p>
     <div id="searchResults" class="storyList searchResults" aria-live="polite"></div>
   </section>
@@ -40,7 +40,7 @@ const posts = (await getCollection("posts"))
             <div class="meta"><span class="badge">${post.category}</span><span>${post.publishDate}</span></div>
             <h3>${post.title}</h3><p>${post.deck}</p>
           </div>
-        </a>`).join("") : `<p class="emptyState">No matching signals yet. Try a broader term.</p>`;
+        </a>`).join("") : `<p class="emptyState">No matching articles yet. Try a broader term.</p>`;
     }
   </script>
 </BaseLayout>

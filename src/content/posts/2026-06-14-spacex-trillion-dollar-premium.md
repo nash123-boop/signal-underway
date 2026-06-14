@@ -16,7 +16,7 @@ sources:
 featured: true
 ---
 
-**Opening signal:** SpaceX did more than complete the largest initial public offering on record. Its first day of trading showed how far public markets are willing to look beyond present earnings when a company offers dominance, technological ambition, and a compelling story about the future.
+SpaceX did more than complete the largest initial public offering on record. Its first day of trading showed how far public markets are willing to look beyond present earnings when a company offers dominance, technological ambition, and a compelling story about the future.
 
 The company priced its offering at $135 a share and raised roughly $75 billion. Public trading opened at $150, and the stock closed at $160.95, giving SpaceX a market value of about $2.1 trillion.
 
