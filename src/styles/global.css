@@ -499,6 +499,8 @@ img{ max-width:100%; }
 .frontPageRail{ grid-area:rail; padding:0 18px; border-left:1px solid var(--line); border-right:1px solid var(--line); }
 .railStory{ display:block; padding:16px 0; border-bottom:1px solid var(--line); }
 .railStory:last-child{ border-bottom:0; }
+.railStoryMedia{ display:none; }
+.railStoryMedia img{ width:100%; height:100%; display:block; object-fit:cover; }
 .railStory h2{ margin:5px 0 0; font-family:var(--serif); font-size:22px; font-weight:800; letter-spacing:-.012em; line-height:1.13; }
 .railStory p{ margin:8px 0 0; color:var(--muted); font-family:var(--serif); font-size:16px; line-height:1.42; }
 .frontPagePrimary{ grid-area:primary; padding:16px 20px 20px 0; text-align:left; }
@@ -650,13 +652,14 @@ img{ max-width:100%; }
   .primaryStoryMedia{ aspect-ratio:16/9; margin-bottom:12px; }
   .frontPagePrimary h1{ max-width:none; margin:6px 0 8px; font-size:var(--title-size-mobile); line-height:1.02; }
   .frontPagePrimary>p{ margin:0; font-family:var(--sans); font-size:15px; line-height:1.5; }
-  .frontPageSecondary{ order:2; padding:18px 0; border-bottom:1px solid var(--line); }
-  .frontPageSecondary{ display:grid; grid-template-columns:1fr 112px; gap:12px; }
-  .frontPageSecondary .secondaryStoryMedia{ grid-column:2; grid-row:1 / span 4; width:112px; height:82px; margin:0; }
+  .frontPageSecondary{ order:2; display:grid; grid-template-columns:minmax(0,1fr) 120px; gap:14px; align-items:start; padding:18px 0; border-bottom:1px solid var(--line); }
+  .frontPageSecondary .secondaryStoryMedia{ grid-column:2; grid-row:1 / span 4; width:120px; height:88px; margin:0; }
   .frontPageSecondary h2{ margin:4px 0 6px; font-size:21px; font-weight:800; }
   .frontPageSecondary>p{ display:none; }
   .frontPageRail{ order:3; padding:0; }
-  .railStory{ padding:16px 0; }
+  .railStory{ display:grid; grid-template-columns:minmax(0,1fr) 120px; gap:14px; align-items:start; padding:18px 0; }
+  .railStoryText{ min-width:0; }
+  .railStoryMedia{ display:block; grid-column:2; grid-row:1; width:120px; height:88px; overflow:hidden; background:var(--soft); }
   .railStory h2{ font-size:20px; }
   .railStory p{ display:none; }
   .sectionMasthead{ padding-top:8px; }
@@ -685,6 +688,8 @@ img{ max-width:100%; }
   .signalPills span,.signalPills a{ flex:0 0 auto; min-height:32px; white-space:nowrap; }
   .pageDeck{ line-height:1.5; }
   .pageActions{ display:grid; grid-template-columns:1fr 1fr; }
+  .frontPageSecondary,.railStory{ grid-template-columns:minmax(0,1fr) 104px; gap:12px; }
+  .frontPageSecondary .secondaryStoryMedia,.railStoryMedia{ width:104px; height:78px; }
   .pageActions .btn{ width:100%; }
   .storyList{ gap:0; }
   .storyCard{ grid-template-columns:1fr 96px; gap:12px; padding:16px 0; border-width:1px 0 0; border-radius:0; }

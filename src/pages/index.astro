@@ -21,10 +21,15 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
         <div class="frontPageRail">
           {headlineRail.map((post, index) => (
             <a class="railStory" href={`/p/${post.slug}`}>
-              <div class="storyLabel">{index === 0 ? "Analysis" : categoryLabel(post.data.category)}</div>
-              <h2>{post.data.title}</h2>
-              {index === 0 && <p>{post.data.deck}</p>}
-              <div class="storyTime">{readingMinutes(post.body)} min read</div>
+              <div class="railStoryText">
+                <div class="storyLabel">{index === 0 ? "Analysis" : categoryLabel(post.data.category)}</div>
+                <h2>{post.data.title}</h2>
+                {index === 0 && <p>{post.data.deck}</p>}
+                <div class="storyTime">{readingMinutes(post.body)} min read</div>
+              </div>
+              <div class="railStoryMedia">
+                <img src={coverFor(post)} alt="" loading="lazy" onerror="this.onerror=null;this.src='/covers/default.webp';" />
+              </div>
             </a>
           ))}
         </div>
