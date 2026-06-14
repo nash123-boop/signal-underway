@@ -5,6 +5,7 @@ category: "Business"
 publishDate: "2026-06-14"
 author: "The National Angle Desk"
 tags: ["SpaceX", "Elon Musk", "Markets", "Artificial Intelligence"]
+cover: "/posts/spacex-trillion-dollar-premium.webp"
 sources:
   - title: "SpaceX Makes Largest-Ever Stock Market Debut, Making Elon Musk World's First Trillionaire"
     url: "https://www.theguardian.com/science/2026/jun/12/spacex-stock-price-ipo-spcx"
