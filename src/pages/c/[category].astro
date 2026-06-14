@@ -15,31 +15,75 @@ if (!canonicalCat) return Astro.redirect("/");
 const posts = sortPostsNewest((await getCollection("posts")).filter((post) => belongsToSection(post, canonicalCat)));
 const lead = selectLeadPost(posts);
 const remaining = lead ? posts.filter((post) => post.id !== lead.id) : [];
+const secondary = remaining[0];
+const headlineRail = remaining.slice(1, 3);
+const moreStories = remaining.slice(3);
+const sectionTopics: Record<string, string[]> = {
+  World: ["Europe", "Middle East", "Asia", "Americas", "Africa"],
+  Politics: ["Foreign Policy", "Government", "Elections", "Security"],
+  Business: ["Markets", "Companies", "Economy", "Money"],
+  Technology: ["Artificial Intelligence", "Energy", "Science", "Infrastructure"],
+  Culture: ["Ideas", "Media", "Sport", "History"],
+};
+const topics = sectionTopics[canonicalCat] ?? [];
+const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split(/\s+/).filter(Boolean).length / 220));
 ---
 
 <BaseLayout title={`${canonicalCat} - The National Angle`} currentNav={canonicalCat}>
-  <div class="publicationPage">
+  <div class="publicationPage sectionPage">
+    <header class="sectionMasthead">
+      <h1>{canonicalCat}</h1>
+      <nav aria-label={`${canonicalCat} topics`}>
+        {topics.map((topic) => <a href={`/search?q=${encodeURIComponent(topic)}`}>{topic}</a>)}
+      </nav>
+    </header>
+
     {!lead ? <p class="emptyState">No published stories in this section yet.</p> : (
       <>
-        <section class="leadStory sectionLeadStory">
-          <div class="leadStoryText">
-            <div class="signalPills"><span>{canonicalCat}</span><span>{lead.data.featured ? "Top story" : "Latest"}</span></div>
-            <h1>{lead.data.title}</h1>
-            <p class="pageDeck">{lead.data.deck}</p>
-            <div class="pageActions"><a class="btn primary" href={`/p/${lead.slug}`}>Read the article</a></div>
-          </div>
-          <a class="leadStoryMedia" href={`/p/${lead.slug}`} aria-label={`Read ${lead.data.title}`}>
-            <img src={coverFor(lead)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />
-          </a>
+        <section class={`sectionNewsGrid ${!secondary ? "singleStory" : headlineRail.length === 0 ? "twoStory" : ""}`} aria-label={`Top ${canonicalCat} stories`}>
+          <article class="sectionPrimaryStory">
+            <a class="sectionPrimaryMedia" href={`/p/${lead.slug}`} aria-label={`Read ${lead.data.title}`}>
+              <img src={coverFor(lead)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />
+            </a>
+            <div class="storyLabel">{lead.data.featured ? "Top story" : "Latest"}</div>
+            <h2><a href={`/p/${lead.slug}`}>{lead.data.title}</a></h2>
+            <p>{lead.data.deck}</p>
+            <div class="storyTime">{readingMinutes(lead.body)} min read</div>
+          </article>
+
+          {secondary && (
+            <article class="sectionSecondaryStory">
+              <a class="sectionSecondaryMedia" href={`/p/${secondary.slug}`} aria-label={`Read ${secondary.data.title}`}>
+                <img src={coverFor(secondary)} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" />
+              </a>
+              <div class="storyLabel">{secondary.data.category}</div>
+              <h2><a href={`/p/${secondary.slug}`}>{secondary.data.title}</a></h2>
+              <p>{secondary.data.deck}</p>
+              <div class="storyTime">{readingMinutes(secondary.body)} min read</div>
+            </article>
+          )}
+
+          {headlineRail.length > 0 && (
+            <div class="sectionHeadlineRail">
+              {headlineRail.map((post) => (
+                <a class="sectionRailStory" href={`/p/${post.slug}`}>
+                  <div class="storyLabel">{post.data.category}</div>
+                  <h2>{post.data.title}</h2>
+                  <p>{post.data.deck}</p>
+                  <div class="storyTime">{readingMinutes(post.body)} min read</div>
+                </a>
+              ))}
+            </div>
+          )}
         </section>
 
-        {remaining.length > 0 && (
+        {moreStories.length > 0 && (
           <section class="storyFeed">
-            <h2 class="sectionLabel">More in {canonicalCat}</h2>
+            <div class="sectionHeading"><h2>More in {canonicalCat}</h2></div>
             <div class="storyList archiveList">
-              {remaining.map((post) => (
+              {moreStories.map((post) => (
                 <a class="storyCard" href={`/p/${post.slug}`}>
-                  <div class="storyCardText"><div class="meta"><span class="badge">{post.data.category}</span><span class="dot">&bull;</span><time datetime={post.data.publishDate}>{post.data.publishDate}</time></div><h3>{post.data.title}</h3><p>{post.data.deck}</p></div>
+                  <div class="storyCardText"><div class="meta"><span class="storyLabel">{post.data.category}</span><span class="dot">&bull;</span><span>{readingMinutes(post.body)} min read</span></div><h3>{post.data.title}</h3><p>{post.data.deck}</p></div>
                   <div class="storyThumb"><img src={coverFor(post)} alt="" loading="lazy" onerror="this.onerror=null;this.src='/covers/default.webp';" /></div>
                 </a>
               ))}

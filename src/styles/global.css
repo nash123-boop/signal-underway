@@ -507,6 +507,32 @@ img{ max-width:100%; }
 .frontPageSecondary h2{ margin:7px 0 8px; font-family:var(--serif); font-size:30px; font-weight:500; letter-spacing:-.025em; line-height:1.08; text-wrap:balance; }
 .frontPageSecondary>p{ margin:0; color:var(--muted); font-family:var(--serif); font-size:16px; line-height:1.42; }
 
+.sectionMasthead{ padding:12px 0 0; border-bottom:2px solid var(--text); }
+.sectionMasthead h1{ margin:0 0 8px; font-family:var(--serif); font-size:clamp(44px,4.4vw,64px); font-weight:900; letter-spacing:-.035em; line-height:1; }
+.sectionMasthead nav{ display:flex; align-items:center; gap:0; overflow-x:auto; scrollbar-width:none; border-top:1px solid var(--line); }
+.sectionMasthead nav::-webkit-scrollbar{ display:none; }
+.sectionMasthead nav a{ flex:0 0 auto; padding:7px 12px 7px 0; margin-right:12px; color:var(--text); font-family:var(--sans); font-size:11px; letter-spacing:.04em; text-transform:uppercase; }
+.sectionMasthead nav a+a{ border-left:1px solid var(--line); padding-left:12px; }
+.sectionNewsGrid{ display:grid; grid-template-columns:minmax(0,1.5fr) minmax(250px,.78fr) minmax(220px,.58fr); gap:0; padding-top:24px; border-bottom:1px solid var(--text); }
+.sectionNewsGrid a:hover{ text-decoration:none; }
+.sectionNewsGrid.singleStory{ grid-template-columns:minmax(0,1fr); }
+.sectionNewsGrid.twoStory{ grid-template-columns:minmax(0,1.55fr) minmax(280px,.85fr); }
+.sectionPrimaryStory{ padding:0 18px 22px 0; }
+.sectionPrimaryMedia,.sectionSecondaryMedia{ display:block; overflow:hidden; margin-bottom:12px; background:var(--soft); }
+.sectionPrimaryMedia{ aspect-ratio:1.52/1; }
+.sectionSecondaryMedia{ aspect-ratio:.93/1; }
+.sectionPrimaryMedia img,.sectionSecondaryMedia img{ width:100%; height:100%; display:block; object-fit:cover; }
+.sectionPrimaryStory h2{ margin:6px 0 8px; font-family:var(--serif); font-size:clamp(31px,2.8vw,44px); font-weight:900; letter-spacing:-.028em; line-height:1.02; text-wrap:balance; }
+.sectionPrimaryStory>p{ max-width:65ch; margin:0; color:var(--muted); font-family:var(--serif); font-size:17px; line-height:1.43; }
+.sectionSecondaryStory{ padding:0 18px 22px; border-left:1px solid var(--line); }
+.sectionSecondaryStory h2{ margin:6px 0 8px; font-family:var(--serif); font-size:28px; font-weight:700; letter-spacing:-.02em; line-height:1.08; }
+.sectionSecondaryStory>p{ margin:0; color:var(--muted); font-family:var(--serif); font-size:15px; line-height:1.43; }
+.sectionHeadlineRail{ border-left:1px solid var(--line); padding-left:18px; }
+.sectionRailStory{ display:block; padding:0 0 18px; margin-bottom:18px; border-bottom:1px solid var(--line); }
+.sectionRailStory:last-child{ margin-bottom:0; border-bottom:0; }
+.sectionRailStory h2{ margin:5px 0 7px; font-family:var(--serif); font-size:23px; font-weight:800; letter-spacing:-.015em; line-height:1.12; }
+.sectionRailStory p{ margin:0; color:var(--muted); font-family:var(--serif); font-size:14px; line-height:1.4; }
+
 .leadStory{ display:grid; grid-template-columns:1.2fr 1fr; gap:22px; align-items:stretch; padding:18px 0 22px; border-bottom:1px solid var(--line); }
 .leadStoryText{ align-self:center; }
 .leadStory h1,.archiveHero h1,.infoPage h1,.publicationArticle h1,.searchPage h1{ margin:0 0 12px; font-family:var(--serif); font-size:var(--title-size); font-weight:900; letter-spacing:-.025em; line-height:1.04; text-wrap:balance; }
@@ -627,6 +653,21 @@ img{ max-width:100%; }
   .railStory{ padding:16px 0; }
   .railStory h2{ font-size:20px; }
   .railStory p{ display:none; }
+  .sectionMasthead{ padding-top:8px; }
+  .sectionMasthead h1{ font-size:38px; }
+  .sectionNewsGrid{ display:flex; flex-direction:column; padding-top:16px; }
+  .sectionPrimaryStory{ padding:0 0 20px; border-bottom:1px solid var(--line); }
+  .sectionPrimaryMedia{ aspect-ratio:16/9; }
+  .sectionPrimaryStory h2{ font-size:var(--title-size-mobile); }
+  .sectionPrimaryStory>p{ font-family:var(--sans); font-size:15px; line-height:1.5; }
+  .sectionSecondaryStory{ display:grid; grid-template-columns:1fr 112px; gap:12px; padding:18px 0; border-left:0; border-bottom:1px solid var(--line); }
+  .sectionSecondaryMedia{ grid-column:2; grid-row:1 / span 4; width:112px; height:82px; margin:0; }
+  .sectionSecondaryStory h2{ margin:4px 0 6px; font-size:21px; font-weight:800; }
+  .sectionSecondaryStory>p{ display:none; }
+  .sectionHeadlineRail{ border-left:0; padding-left:0; }
+  .sectionRailStory{ padding:16px 0; margin:0; }
+  .sectionRailStory h2{ font-size:20px; }
+  .sectionRailStory p{ display:none; }
 }
 
 @media (max-width:560px){
