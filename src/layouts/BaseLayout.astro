@@ -2,7 +2,7 @@
 import "../styles/global.css";
 
 const {
-  title = "The National Signal",
+  title = "The National Angle",
   description = "Tracking patterns shaping what comes next.",
   ogImage = "/og-default.png",
   currentNav = "Latest",
@@ -25,14 +25,14 @@ const absoluteOgImage = new URL(ogImage, site).toString();
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" type="application/rss+xml" title="The National Signal RSS" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="The National Angle RSS" href="/rss.xml" />
     {noIndex && <meta name="robots" content="noindex,follow" />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteOgImage} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="The National Signal" />
+    <meta property="og:site_name" content="The National Angle" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -42,10 +42,10 @@ const absoluteOgImage = new URL(ogImage, site).toString();
   <body>
     <header class="siteHeader">
       <div class="container headerInner">
-        <a class="brand" href="/" aria-label="The National Signal home">
+        <a class="brand" href="/" aria-label="The National Angle home">
           <div class="brandMark" aria-hidden="true"></div>
           <div class="brandText">
-            <div class="brandName">The National Signal</div>
+            <div class="brandName">The National Angle</div>
             <div class="brandTag">Tracking patterns shaping what comes next.</div>
           </div>
         </a>
@@ -71,7 +71,7 @@ const absoluteOgImage = new URL(ogImage, site).toString();
 
     <footer class="siteFooter">
       <div class="container footerInner">
-        <div>&copy; {year} The National Signal</div>
+        <div>&copy; {year} The National Angle</div>
         <div class="footerLinks">
           <a href="/about">About</a>
           <a href="/method">Method</a>

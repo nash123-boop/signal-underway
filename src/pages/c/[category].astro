@@ -14,7 +14,7 @@ if (!canonicalCat) return Astro.redirect("/latest");
 const posts = (await getCollection("posts")).filter((post) => post.data.category.toLowerCase() === cat).sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
 ---
 
-<BaseLayout title={`${canonicalCat} - The National Signal`} currentNav={canonicalCat}>
+<BaseLayout title={`${canonicalCat} - The National Angle`} currentNav={canonicalCat}>
   <div class="publicationPage">
     <header class="archiveHero">
       <div><div class="signalPills"><span>{canonicalCat}</span><span>Archive</span></div><h1>{canonicalCat}</h1><p class="pageDeck">Reporting and analysis focused on consequential changes in {canonicalCat.toLowerCase()}.</p></div>

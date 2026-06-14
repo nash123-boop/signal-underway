@@ -49,12 +49,12 @@ const jsonLd = {
   author: { "@type": "Organization", name: post.data.author },
   mainEntityOfPage: url,
   image: new URL(heroImage, site).toString(),
-  publisher: { "@type": "Organization", name: "The National Signal" },
+  publisher: { "@type": "Organization", name: "The National Angle" },
 };
 ---
 
 <BaseLayout
-  title={`${post.data.title} - The National Signal`}
+  title={`${post.data.title} - The National Angle`}
   description={post.data.deck}
   ogImage={heroImage}
   canonical={url}

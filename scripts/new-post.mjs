@@ -25,6 +25,6 @@ if (fs.existsSync(target)) {
   console.error(`Article already exists: ${target}`);
   process.exit(1);
 }
-const content = `---\ntitle: "${publicationTitle.replaceAll('"', '\\"')}"\ndeck: "${args.deck.replaceAll('"', '\\"')}"\ncategory: "${args.category}"\npublishDate: "${date}"\nauthor: "The National Signal Desk"\ntags: []\nsources: []\nfeatured: false\n---\n\n**Opening signal:** Write the observable change in one clear paragraph.\n\n## The Evidence\n\nExplain what can be verified and link primary sources.\n\n## What It Could Mean\n\nSeparate interpretation from established fact. Include credible alternatives.\n\n## What to Watch Next\n\nList the specific events or data that would strengthen or weaken the analysis.\n`;
+const content = `---\ntitle: "${publicationTitle.replaceAll('"', '\\"')}"\ndeck: "${args.deck.replaceAll('"', '\\"')}"\ncategory: "${args.category}"\npublishDate: "${date}"\nauthor: "The National Angle Desk"\ntags: []\nsources: []\nfeatured: false\n---\n\n**Opening signal:** Write the observable change in one clear paragraph.\n\n## The Evidence\n\nExplain what can be verified and link primary sources.\n\n## What It Could Mean\n\nSeparate interpretation from established fact. Include credible alternatives.\n\n## What to Watch Next\n\nList the specific events or data that would strengthen or weaken the analysis.\n`;
 fs.writeFileSync(target, content, "utf8");
 console.log(`Created ${target}`);

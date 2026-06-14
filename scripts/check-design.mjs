@@ -21,6 +21,13 @@ for (const file of files) {
   }
 }
 
+for (const file of files) {
+  const source = fs.readFileSync(file, "utf8");
+  if (/The National Signal/.test(source)) {
+    errors.push(`${path.relative(process.cwd(), file)}: legacy publication name found`);
+  }
+}
+
 if (errors.length) {
   console.error(errors.join("\n"));
   process.exit(1);

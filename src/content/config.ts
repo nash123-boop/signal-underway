@@ -9,7 +9,7 @@ const posts = defineCollection({
     cover: z.string().optional(),
     publishDate: z.string(), // YYYY-MM-DD
     updatedDate: z.string().optional(),
-    author: z.string().default("The National Signal Desk"),
+    author: z.string().default("The National Angle Desk"),
     tags: z.array(z.string()).default([]),
     sources: z.array(z.object({
       title: z.string(),

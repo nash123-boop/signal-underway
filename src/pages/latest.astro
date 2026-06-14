@@ -6,10 +6,10 @@ import { categoryBanner, coverFor } from "../lib/covers";
 const posts = (await getCollection("posts")).sort((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
 ---
 
-<BaseLayout title="Latest - The National Signal" currentNav="Latest">
+<BaseLayout title="Latest - The National Angle" currentNav="Latest">
   <div class="publicationPage">
     <header class="archiveHero">
-      <div><div class="signalPills"><span>Latest</span><span>All categories</span></div><h1>Latest</h1><p class="pageDeck">The newest reporting and analysis from The National Signal.</p></div>
+      <div><div class="signalPills"><span>Latest</span><span>All categories</span></div><h1>Latest</h1><p class="pageDeck">The newest reporting and analysis from The National Angle.</p></div>
       <div class="archiveMedia"><img src={categoryBanner("latest")} alt="" loading="eager" onerror="this.onerror=null;this.src='/covers/default.webp';" /></div>
     </header>
     <section class="storyList archiveList">

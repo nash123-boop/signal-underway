@@ -3,7 +3,7 @@ title: "Why Cash Feels Different Now"
 deck: "Small signals suggest money is changing shape again."
 category: "Business"
 publishDate: "2026-02-14"
-author: "The National Signal Desk"
+author: "The National Angle Desk"
 tags: ["Payments", "Banking", "Infrastructure"]
 featured: true
 cover: "/posts/why-cash-feels-different-now.png"
