@@ -1,6 +1,6 @@
 import { getCollection } from "astro:content";
 
-const staticPages = ["/", "/latest", "/about", "/method", "/privacy", "/c/world", "/c/politics", "/c/business", "/c/technology", "/c/culture"];
+const staticPages = ["/", "/about", "/method", "/privacy", "/c/world", "/c/politics", "/c/business", "/c/technology", "/c/culture"];
 
 export async function GET({ site }) {
   const base = site ?? new URL("https://signal-underway.pages.dev");

@@ -53,7 +53,7 @@ const readingMinutes = (body: string) => Math.max(1, Math.ceil(body.trim().split
     )}
 
     <section class="storyFeed">
-      <div class="sectionHeading"><h2>Latest</h2><a href="/latest">View all</a></div>
+      <div class="sectionHeading"><h2>More Stories</h2></div>
       <div class="storyList">
         {latest.map((post) => (
           <a class="storyCard" href={`/p/${post.slug}`}>
