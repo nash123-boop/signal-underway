@@ -25,7 +25,7 @@ export async function GET({ site }) {
     <channel>
       <title>The National Angle</title>
       <link>${site}</link>
-      <description>Tracking patterns shaping what comes next.</description>
+      <description>The angle behind the headline.</description>
       ${items}
     </channel>
   </rss>`;
