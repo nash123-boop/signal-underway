@@ -6,6 +6,7 @@ publishDate: "2026-06-14"
 publishTime: "17:53"
 author: "The National Angle Desk"
 tags: ["Switzerland", "Immigration", "Demographics", "World"]
+cover: "/posts/swiss-limit-population-cap.webp"
 sources:
   - title: "Early Results Show Swiss Voters Reject Right-Wing's Bid to Cap Population at 10 Million"
     url: "https://apnews.com/article/switzerland-referendum-population-10-million-03b42363567cfa9ff29c0995bb4ff711"
