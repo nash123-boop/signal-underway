@@ -1,6 +1,6 @@
 ---
-title: "Why the US-Iran Peace Deal Is Not a Deal Yet"
-deck: "Conflicting timelines and unresolved nuclear terms show why declarations of breakthrough keep outrunning the diplomacy."
+title: "The Geopolitical 6-7: Why the US-Iran Peace Deal Keeps Moving Forward and Back"
+deck: "The viral gesture has become an unlikely metaphor for peace talks that repeatedly advance, retreat, and return to the same unresolved terms."
 category: "Politics"
 publishDate: "2026-06-14"
 author: "The National Angle Desk"
@@ -18,6 +18,8 @@ featured: true
 ---
 
 The United States, Iran, and their mediators appear closer than at any previous point to an agreement that could extend the ceasefire and reopen the Strait of Hormuz. Yet the public statements surrounding the proposed deal reveal a more cautious reality: the parties do not fully agree on when it will be signed, what it immediately requires, or how its most difficult provisions would work.
+
+The pattern resembles the viral "6-7" gesture: one hand rises as the other falls, then the movement reverses and repeats. The meme itself has no fixed meaning, but its endless back-and-forth makes it an unusually fitting image for negotiations that keep advancing toward a breakthrough before returning to the same unresolved disputes.
 
 President Donald Trump said the agreement was scheduled to be signed on Sunday and that the strait would reopen immediately afterwards. Pakistani Prime Minister Shehbaz Sharif said preparations were underway for an electronic signing, followed by technical talks. Iran's foreign ministry, however, said a signing would not take place on Sunday and suggested that more time could be required.
 
