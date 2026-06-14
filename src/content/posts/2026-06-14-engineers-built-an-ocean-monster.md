@@ -1,11 +1,11 @@
 ---
-title: "Engineers Built an Ocean Monster"
+title: "Engineers Built an Ocean Monster Bigger Than the Empire State Building—Then It Blew Up"
 deck: "The largest ship ever built was too enormous for the world's canals, too slow to escape war, and too valuable to remain dead."
-category: "Technology"
+category: "Culture"
 publishDate: "2026-06-14"
 publishTime: "19:08"
 author: "The National Angle Desk"
-tags: ["World", "Politics", "Business", "Culture", "Maritime History"]
+tags: ["Maritime History", "Engineering", "Seawise Giant", "Shipping"]
 cover: "/posts/engineers-built-an-ocean-monster.webp"
 sources:
   - title: "The Remarkable Story of the Largest Ship Ever Built"
