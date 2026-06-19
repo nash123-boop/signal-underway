@@ -34,7 +34,7 @@ const candidates = [
 ].filter((value, index, all) => value && all.indexOf(value) === index);
 
 const heroImage = candidates[0];
-const site = Astro.site ?? new URL("https://signal-underway.pages.dev");
+const site = Astro.site ?? new URL("https://thenationalangle.com");
 const url = new URL(`/p/${post.slug}`, site).toString();
 const words = post.body.trim().split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(1, Math.ceil(words / 220));

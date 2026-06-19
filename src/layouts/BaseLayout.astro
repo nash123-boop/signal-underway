@@ -17,7 +17,7 @@ const today = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
   year: "numeric",
 }).format(new Date());
-const site = Astro.site ?? new URL("https://signal-underway.pages.dev");
+const site = Astro.site ?? new URL("https://thenationalangle.com");
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site).toString();
 const absoluteOgImage = new URL(ogImage, site).toString();
 ---

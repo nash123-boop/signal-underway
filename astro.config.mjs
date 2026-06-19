@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://signal-underway.pages.dev',
+  site: 'https://thenationalangle.com',
   trailingSlash: 'never',
 });

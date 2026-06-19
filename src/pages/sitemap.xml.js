@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 const staticPages = ["/", "/about", "/method", "/privacy", "/c/world", "/c/politics", "/c/business", "/c/technology", "/c/culture"];
 
 export async function GET({ site }) {
-  const base = site ?? new URL("https://signal-underway.pages.dev");
+  const base = site ?? new URL("https://thenationalangle.com");
   const posts = await getCollection("posts");
   const pages = [
     ...staticPages.map((path) => ({ path })),
