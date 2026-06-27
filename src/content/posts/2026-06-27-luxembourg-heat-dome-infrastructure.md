@@ -6,6 +6,7 @@ publishDate: "2026-06-27"
 publishTime: "10:41"
 author: "The National Angle Desk"
 tags: ["Luxembourg", "Climate Adaptation", "Infrastructure", "Public Policy", "Macroeconomics"]
+cover: "/posts/luxembourg-heat-dome-infrastructure.jpg"
 sources:
   - title: "MeteoLux weather warnings"
     url: "https://www.meteolux.lu/en/weather/warnings/"
