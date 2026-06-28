@@ -17,15 +17,22 @@ function publishedAt(post) {
   return new Date(`${post.data.publishDate}T${post.data.publishTime ?? "00:00"}:00Z`);
 }
 
+function dateOnly(value) {
+  return value.toISOString().slice(0, 10);
+}
+
+function recentDate(post) {
+  return post.data.updatedDate && post.data.updatedDate > post.data.publishDate
+    ? post.data.updatedDate
+    : post.data.publishDate;
+}
+
 export async function GET({ site }) {
   const base = site ?? new URL("https://thenationalangle.com");
   const now = new Date();
-  const cutoff = new Date(now.getTime() - TWO_DAYS_MS);
+  const cutoff = dateOnly(new Date(now.getTime() - TWO_DAYS_MS));
   const posts = (await getCollection("posts"))
-    .filter((post) => {
-      const published = publishedAt(post);
-      return published >= cutoff && published <= now;
-    })
+    .filter((post) => recentDate(post) >= cutoff)
     .sort((a, b) => publishedAt(b).getTime() - publishedAt(a).getTime())
     .slice(0, 1000);
 
