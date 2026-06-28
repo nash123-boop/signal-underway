@@ -1,6 +1,6 @@
 ---
-title: "The Air-Conditioned Paradox: How a 40°C Heat Dome Broke Luxembourg's Infrastructure"
-deck: "The Grand Duchy looks extraordinarily wealthy on paper, but a record-shattering June heatwave exposes a foundational vulnerability: Europe's richest state was built exclusively for winter."
+title: "Luxembourg's 40 C Heat Problem: Europe's Richest Country Was Built for Winter"
+deck: "Luxembourg's heatwave exposed a costly infrastructure gap: homes, schools, buses, and offices built to trap warmth are now struggling to keep people cool."
 category: "Business"
 publishDate: "2026-06-28"
 publishTime: "10:41"
@@ -18,13 +18,13 @@ sources:
 featured: true
 ---
 
-An unprecedented meteorological crisis has forced Europe's wealthiest nation to confront a foundational vulnerability: its physical infrastructure was engineered for a world that no longer exists.
+Luxembourg's latest heatwave has exposed a strange weakness in one of Europe's richest countries: much of daily life was built to survive cold winters, not repeated 40 C summers.
 
-The immediate story is the severe, week-long heatwave that pushed daytime temperatures to a record-breaking 38.2°C at Findel and up to 40°C across urban centers, forcing authorities to escalate to a national red alert. The bigger story is how rapidly this extreme heat dome paralyzed daily life, exposing a massive deficit in Luxembourg's long-term urban cooling strategies. That distinction matters because it shatters the illusion of financial insulation, proving that astronomical gross domestic product cannot protect a populace when its public spaces, schools, transport networks, and workplaces are structurally incapable of shedding heat.
+The immediate story is the severe, week-long heatwave that pushed daytime temperatures to a record-breaking 38.2 C at Findel and up to 40 C across urban centers, forcing authorities to escalate to a national red alert. The bigger story is how rapidly this extreme heat dome paralyzed daily life, exposing a massive deficit in Luxembourg's long-term urban cooling strategies. That distinction matters because it shatters the illusion of financial insulation, proving that astronomical gross domestic product cannot protect a populace when its public spaces, schools, transport networks, and workplaces are structurally incapable of shedding heat.
 
 ## Built for Winter, Not This Summer
 
-The country operates as a glaring economic paradox. It boasts elite salaries, ultra-modern commercial districts, free public transport, and a reputation for flawless administrative efficiency. Yet when successive tropical nights keep overnight temperatures hovering at a stifling 24°C to 26°C, the state behaves less like a hyper-modern financial hub and more like a collective oven.
+The country operates as a glaring economic paradox. It boasts elite salaries, ultra-modern commercial districts, free public transport, and a reputation for flawless administrative efficiency. Yet when successive tropical nights keep overnight temperatures hovering at a stifling 24 C to 26 C, the state behaves less like a hyper-modern financial hub and more like a collective oven.
 
 For generations, western European building codes were designed around a singular priority: keeping the winter cold out. Thick thermal walls, sealed triple-glazed windows, insulated roofs, and south-facing windows made perfect sense when the primary civic challenge was seasonal heating. Today, those identical architectural choices act as heat traps, baking residents in upper-floor flats and attic apartments without an easy escape.
 
