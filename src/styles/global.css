@@ -691,11 +691,12 @@ img{ max-width:100%; }
 }
 
 @media (max-width:560px){
-  .headerInner{ grid-template-columns:1fr; gap:8px; padding:10px 0 0; }
-  .brand{ grid-column:1; }
-  .search{ grid-column:1; width:100%; min-width:0; margin-top:2px; padding:7px 10px; }
-  .search input{ min-width:0; }
-  .nav{ grid-column:1; }
+  .headerInner{ grid-template-columns:minmax(0,1fr) minmax(112px,38vw); gap:8px 10px; padding:10px 0 0; }
+  .brand{ grid-column:1; min-width:0; }
+  .search{ grid-column:2; align-self:center; width:100%; min-width:0; margin-top:0; padding:6px 8px; }
+  .search input{ min-width:0; font-size:12px; }
+  .search input::placeholder{ color:transparent; }
+  .nav{ grid-column:1 / -1; }
   .publicationPage,.infoPage{ padding:4px 0 36px; }
   .leadStory{ gap:16px; padding:12px 0 20px; }
   .leadStory h1,.archiveHero h1,.infoPage h1,.publicationArticle h1,.searchPage h1{ font-size:var(--title-size-mobile); }
