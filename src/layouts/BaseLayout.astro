@@ -8,6 +8,7 @@ const {
   currentNav = "Main",
   canonical,
   noIndex = false,
+  ogType = "website",
 } = Astro.props;
 
 const year = new Date().getFullYear();
@@ -20,6 +21,33 @@ const today = new Intl.DateTimeFormat("en-US", {
 const site = Astro.site ?? new URL("https://thenationalangle.com");
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site).toString();
 const absoluteOgImage = new URL(ogImage, site).toString();
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": new URL("/#organization", site).toString(),
+      name: "The National Angle",
+      url: site.toString(),
+      logo: {
+        "@type": "ImageObject",
+        url: new URL("/angle-mark.svg", site).toString(),
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": new URL("/#website", site).toString(),
+      name: "The National Angle",
+      url: site.toString(),
+      publisher: { "@id": new URL("/#organization", site).toString() },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${new URL("/search", site).toString()}?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -38,12 +66,13 @@ const absoluteOgImage = new URL(ogImage, site).toString();
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteOgImage} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="The National Angle" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteOgImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(siteJsonLd)} />
   </head>
 
   <body>
@@ -86,6 +115,7 @@ const absoluteOgImage = new URL(ogImage, site).toString();
         <div>&copy; {year} The National Angle</div>
         <div class="footerLinks">
           <a href="/about">About</a>
+          <a href="/contact">Contact</a>
           <a href="/method">Method</a>
           <a href="/privacy">Privacy</a>
           <a href="/rss.xml">RSS</a>

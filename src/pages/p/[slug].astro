@@ -38,18 +38,34 @@ const site = Astro.site ?? new URL("https://thenationalangle.com");
 const url = new URL(`/p/${post.slug}`, site).toString();
 const words = post.body.trim().split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(1, Math.ceil(words / 220));
+const datePublished = post.data.publishTime
+  ? `${post.data.publishDate}T${post.data.publishTime}:00Z`
+  : post.data.publishDate;
+const dateModified = post.data.updatedDate ?? post.data.publishDate;
+const imageUrl = new URL(heroImage, site).toString();
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": "NewsArticle",
   headline: post.data.title,
   description: post.data.deck,
-  datePublished: post.data.publishDate,
-  ...(post.data.updatedDate ? { dateModified: post.data.updatedDate } : {}),
-  author: { "@type": "Organization", name: post.data.author },
+  datePublished,
+  dateModified,
+  author: [{ "@type": "Organization", name: post.data.author, url: new URL("/about", site).toString() }],
   mainEntityOfPage: url,
-  image: new URL(heroImage, site).toString(),
-  publisher: { "@type": "Organization", name: "The National Angle" },
+  image: [imageUrl],
+  articleSection: categoryLabel(post.data.category),
+  keywords: post.data.tags,
+  isAccessibleForFree: true,
+  publisher: {
+    "@type": "Organization",
+    name: "The National Angle",
+    url: site.toString(),
+    logo: {
+      "@type": "ImageObject",
+      url: new URL("/angle-mark.svg", site).toString(),
+    },
+  },
 };
 ---
 
@@ -58,6 +74,7 @@ const jsonLd = {
   description={post.data.deck}
   ogImage={heroImage}
   canonical={url}
+  ogType="article"
 >
   <article class="article publicationArticle">
     <div class="signalPills">
