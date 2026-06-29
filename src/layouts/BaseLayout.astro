@@ -12,12 +12,6 @@ const {
 } = Astro.props;
 
 const year = new Date().getFullYear();
-const today = new Intl.DateTimeFormat("en-US", {
-  weekday: "long",
-  month: "long",
-  day: "numeric",
-  year: "numeric",
-}).format(new Date());
 const site = Astro.site ?? new URL("https://thenationalangle.com");
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, site).toString();
 const absoluteOgImage = new URL(ogImage, site).toString();
@@ -79,7 +73,7 @@ const siteJsonLd = {
     <header class="siteHeader">
       <div class="container headerInner">
         <div class="headerMeta">
-          <span>{today}</span>
+          <span data-current-date>Today</span>
           <span>Independent analysis</span>
         </div>
 
@@ -124,6 +118,16 @@ const siteJsonLd = {
     </footer>
 
     <script>
+      const dateElement = document.querySelector("[data-current-date]");
+      if (dateElement) {
+        dateElement.textContent = new Intl.DateTimeFormat("en-US", {
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        }).format(new Date());
+      }
+
       document.addEventListener("keydown", (event) => {
         if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey) return;
         const target = event.target;
